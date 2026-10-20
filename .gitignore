@@ -5,6 +5,8 @@
 # Next.js build output
 /.next/
 /out/
+/.open-next/
+/.wrangler/
 *.tsbuildinfo
 
 # Environment variables
