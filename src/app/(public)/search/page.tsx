@@ -20,31 +20,35 @@ export default async function SearchPage({
   let staffResults: any[] = [];
 
   if (keyword) {
-    const [allNews, allAnnouncements, allPlants, allStaff] = await Promise.all([
-      db.select().from(schema.news).where(eq(schema.news.status, 'published')),
-      db.select().from(schema.announcements).where(eq(schema.announcements.status, 'published')),
-      db.select().from(schema.botanicalPlants),
-      db.select().from(schema.staff).where(eq(schema.staff.isActive, true)),
-    ]);
+    try {
+      const [allNews, allAnnouncements, allPlants, allStaff] = await Promise.all([
+        db.select().from(schema.news).where(eq(schema.news.status, 'published')),
+        db.select().from(schema.announcements).where(eq(schema.announcements.status, 'published')),
+        db.select().from(schema.botanicalPlants),
+        db.select().from(schema.staff).where(eq(schema.staff.isActive, true)),
+      ]);
 
-    newsResults = allNews.filter(
-      (n) => n.title.toLowerCase().includes(keyword) || (n.summary && n.summary.toLowerCase().includes(keyword))
-    );
+      newsResults = allNews.filter(
+        (n) => n.title.toLowerCase().includes(keyword) || (n.summary && n.summary.toLowerCase().includes(keyword))
+      );
 
-    announcementResults = allAnnouncements.filter(
-      (a) => a.title.toLowerCase().includes(keyword) || a.content.toLowerCase().includes(keyword)
-    );
+      announcementResults = allAnnouncements.filter(
+        (a) => a.title.toLowerCase().includes(keyword) || a.content.toLowerCase().includes(keyword)
+      );
 
-    plantResults = allPlants.filter(
-      (p) =>
-        p.thaiName.toLowerCase().includes(keyword) ||
-        p.scientificName.toLowerCase().includes(keyword) ||
-        p.family.toLowerCase().includes(keyword)
-    );
+      plantResults = allPlants.filter(
+        (p) =>
+          p.thaiName.toLowerCase().includes(keyword) ||
+          p.scientificName.toLowerCase().includes(keyword) ||
+          p.family.toLowerCase().includes(keyword)
+      );
 
-    staffResults = allStaff.filter(
-      (s) => s.name.toLowerCase().includes(keyword) || s.position.toLowerCase().includes(keyword)
-    );
+      staffResults = allStaff.filter(
+        (s) => s.name.toLowerCase().includes(keyword) || s.position.toLowerCase().includes(keyword)
+      );
+    } catch (err) {
+      console.warn('[Search Page] Failed to execute search queries:', err);
+    }
   }
 
   const totalResults = newsResults.length + announcementResults.length + plantResults.length + staffResults.length;

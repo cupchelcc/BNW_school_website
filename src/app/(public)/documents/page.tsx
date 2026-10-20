@@ -7,7 +7,12 @@ import { formatThaiDate } from '@/lib/utils';
 export const revalidate = 60;
 
 export default async function PublicDocumentsPage() {
-  const documentsList = await db.select().from(schema.documents);
+  let documentsList: (typeof schema.documents.$inferSelect)[] = [];
+  try {
+    documentsList = await db.select().from(schema.documents);
+  } catch (err) {
+    console.warn('[Documents Page] Failed to query documents:', err);
+  }
 
   const studentDocs = documentsList.filter((d) => d.category === 'student');
   const generalDocs = documentsList.filter((d) => d.category !== 'student');

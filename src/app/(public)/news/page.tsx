@@ -15,9 +15,13 @@ export default async function PublicNewsPage({
 }) {
   const { category } = await searchParams;
 
-  let query = db.select().from(schema.news).where(eq(schema.news.status, 'published')).orderBy(desc(schema.news.publishedAt));
+  let allNews: (typeof schema.news.$inferSelect)[] = [];
+  try {
+    allNews = await db.select().from(schema.news).where(eq(schema.news.status, 'published')).orderBy(desc(schema.news.publishedAt));
+  } catch (err) {
+    console.warn('[News Page] Failed to query news:', err);
+  }
 
-  const allNews = await query;
   const filtered = category && category !== 'all' ? allNews.filter((n) => n.category === category) : allNews;
 
   const categories = [

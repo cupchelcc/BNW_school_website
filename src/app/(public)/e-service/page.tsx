@@ -7,7 +7,12 @@ import { Globe, ExternalLink, GraduationCap, Users, BookOpen, AlertCircle, Shiel
 export const revalidate = 60;
 
 export default async function PublicEServicePage() {
-  const services = await db.select().from(schema.eServices).where(eq(schema.eServices.isActive, true));
+  let services: (typeof schema.eServices.$inferSelect)[] = [];
+  try {
+    services = await db.select().from(schema.eServices).where(eq(schema.eServices.isActive, true));
+  } catch (err) {
+    console.warn('[E-Service Page] Failed to query services:', err);
+  }
 
   return (
     <div>

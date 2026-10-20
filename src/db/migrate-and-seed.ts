@@ -837,15 +837,13 @@ export async function runMigrationsAndSeed() {
   console.log('[DB] ระบบฐานข้อมูลและ Seed Data ดำเนินการเสร็จสมบูรณ์ 100%');
 }
 
-// เมื่อรันผ่าน command line โดยตรง
-if (process.argv[1]?.endsWith('migrate-and-seed.ts') || process.argv[1]?.endsWith('migrate-and-seed.js')) {
-  runMigrationsAndSeed()
-    .then(() => {
-      console.log('Migration & Seed Finished.');
-      process.exit(0);
-    })
-    .catch((err) => {
-      console.error('Migration & Seed Error:', err);
-      process.exit(1);
-    });
-}
+// เรียกทำงานทันทีเมื่อไฟล์ถูกสั่งรัน
+runMigrationsAndSeed()
+  .then(() => {
+    console.log('Migration & Seed Finished.');
+    process.exit(0);
+  })
+  .catch((err) => {
+    console.error('Migration & Seed Error:', err);
+    process.exit(1);
+  });

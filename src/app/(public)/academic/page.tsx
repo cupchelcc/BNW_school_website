@@ -4,7 +4,12 @@ import { db, schema } from '@/db';
 import { GraduationCap, BookOpen, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export default async function PublicAcademicPage() {
-  const courses = await db.select().from(schema.academicCourses);
+  let courses: (typeof schema.academicCourses.$inferSelect)[] = [];
+  try {
+    courses = await db.select().from(schema.academicCourses);
+  } catch (err) {
+    console.warn('[Academic Page] Failed to query courses:', err);
+  }
 
   const learningAreas = [
     'กลุ่มสาระการเรียนรู้ภาษาไทย',

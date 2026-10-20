@@ -6,8 +6,13 @@ import { MapPin, Phone, Mail, Clock, Send, School } from 'lucide-react';
 import { ContactForm } from '@/components/public/ContactForm';
 
 export default async function PublicContactPage() {
-  const themeRows = await db.select().from(schema.themeSettings).where(eq(schema.themeSettings.id, 'current')).limit(1);
-  const theme = themeRows[0] || {};
+  let theme: Partial<typeof schema.themeSettings.$inferSelect> = {};
+  try {
+    const themeRows = await db.select().from(schema.themeSettings).where(eq(schema.themeSettings.id, 'current')).limit(1);
+    if (themeRows[0]) theme = themeRows[0];
+  } catch (err) {
+    console.warn('[Contact Page] Failed to query theme settings:', err);
+  }
 
   return (
     <div>

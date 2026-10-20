@@ -12,7 +12,12 @@ export default async function PublicBotanicalPage({
   searchParams: Promise<{ q?: string }>;
 }) {
   const { q } = await searchParams;
-  const plants = await db.select().from(schema.botanicalPlants);
+  let plants: (typeof schema.botanicalPlants.$inferSelect)[] = [];
+  try {
+    plants = await db.select().from(schema.botanicalPlants);
+  } catch (err) {
+    console.warn('[Botanical Page] Failed to query plants:', err);
+  }
 
   const filtered = q
     ? plants.filter(

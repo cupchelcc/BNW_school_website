@@ -5,7 +5,12 @@ import { eq } from 'drizzle-orm';
 import { Users, User, Mail, Award } from 'lucide-react';
 
 export default async function PublicStaffPage() {
-  const staffList = await db.select().from(schema.staff).where(eq(schema.staff.isActive, true));
+  let staffList: (typeof schema.staff.$inferSelect)[] = [];
+  try {
+    staffList = await db.select().from(schema.staff).where(eq(schema.staff.isActive, true));
+  } catch (err) {
+    console.warn('[Staff Page] Failed to query staff list:', err);
+  }
 
   const executive = staffList.filter((s) => s.department === 'executive');
   const academic = staffList.filter((s) => s.department === 'academic');
