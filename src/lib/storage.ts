@@ -2,6 +2,7 @@ import fs from 'fs/promises';
 import path from 'path';
 import { db, schema } from '@/db';
 import { eq } from 'drizzle-orm';
+import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
 
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 
@@ -17,6 +18,27 @@ const ALLOWED_MIME_TYPES = [
   'application/vnd.ms-excel',
   'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
 ];
+
+// Cloudflare R2 Client configuration (if environment variables are present)
+const R2_ACCOUNT_ID = process.env.R2_ACCOUNT_ID;
+const R2_ACCESS_KEY_ID = process.env.R2_ACCESS_KEY_ID;
+const R2_SECRET_ACCESS_KEY = process.env.R2_SECRET_ACCESS_KEY;
+const R2_BUCKET_NAME = process.env.R2_BUCKET_NAME || 'bnw-media';
+const R2_PUBLIC_URL = process.env.R2_PUBLIC_URL; // e.g. https://pub-xxxx.r2.dev or custom domain
+
+const isR2Configured = Boolean(R2_ACCOUNT_ID && R2_ACCESS_KEY_ID && R2_SECRET_ACCESS_KEY);
+
+function getR2Client(): S3Client | null {
+  if (!isR2Configured) return null;
+  return new S3Client({
+    region: 'auto',
+    endpoint: `https://${R2_ACCOUNT_ID}.r2.cloudflarestorage.com`,
+    credentials: {
+      accessKeyId: R2_ACCESS_KEY_ID!,
+      secretAccessKey: R2_SECRET_ACCESS_KEY!,
+    },
+  });
+}
 
 export async function uploadMediaFile(
   file: File,
@@ -36,16 +58,34 @@ export async function uploadMediaFile(
     const cleanOriginalName = file.name.replace(/[^a-zA-Z0-9._-]/g, '_');
     const ext = path.extname(cleanOriginalName) || '';
     const safeFileName = `${timestamp}-${Math.random().toString(36).substring(2, 9)}${ext}`;
-
-    const uploadDir = path.join(process.cwd(), 'public', 'uploads');
-    await fs.mkdir(uploadDir, { recursive: true });
-
-    const filePath = path.join(uploadDir, safeFileName);
-    const buffer = Buffer.from(await file.arrayBuffer());
-    await fs.writeFile(filePath, buffer);
-
-    const publicUrl = `/uploads/${safeFileName}`;
     const mediaId = `med-${timestamp}-${Math.random().toString(36).substring(2, 6)}`;
+
+    let publicUrl = '';
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const r2 = getR2Client();
+
+    if (r2) {
+      // Upload directly to Cloudflare R2
+      await r2.send(
+        new PutObjectCommand({
+          Bucket: R2_BUCKET_NAME,
+          Key: safeFileName,
+          Body: buffer,
+          ContentType: file.type,
+        })
+      );
+      publicUrl = R2_PUBLIC_URL
+        ? `${R2_PUBLIC_URL.replace(/\/$/, '')}/${safeFileName}`
+        : `https://${R2_BUCKET_NAME}.${R2_ACCOUNT_ID}.r2.cloudflarestorage.com/${safeFileName}`;
+    } else {
+      // Local fallback for offline/development mode
+      const uploadDir = path.join(process.cwd(), 'public', 'uploads');
+      await fs.mkdir(uploadDir, { recursive: true });
+
+      const filePath = path.join(uploadDir, safeFileName);
+      await fs.writeFile(filePath, buffer);
+      publicUrl = `/uploads/${safeFileName}`;
+    }
 
     await db.insert(schema.mediaFiles).values({
       id: mediaId,
@@ -78,12 +118,26 @@ export async function deleteMediaFile(mediaId: string): Promise<{ success: boole
     }
 
     const media = existing[0];
-    const filePath = path.join(process.cwd(), 'public', 'uploads', media.fileName);
+    const r2 = getR2Client();
 
-    try {
-      await fs.unlink(filePath);
-    } catch {
-      // If file is already gone from disk, proceed to remove DB record
+    if (r2) {
+      try {
+        await r2.send(
+          new DeleteObjectCommand({
+            Bucket: R2_BUCKET_NAME,
+            Key: media.fileName,
+          })
+        );
+      } catch (r2Error) {
+        console.warn('Failed to delete from Cloudflare R2:', r2Error);
+      }
+    } else {
+      const filePath = path.join(process.cwd(), 'public', 'uploads', media.fileName);
+      try {
+        await fs.unlink(filePath);
+      } catch {
+        // If file is already gone from disk, proceed to remove DB record
+      }
     }
 
     await db.delete(schema.mediaFiles).where(eq(schema.mediaFiles.id, mediaId));
