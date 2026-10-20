@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="navyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b1f3c"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#facc15"/>
+      <stop offset="100%" stop-color="#eab308"/>
+    </linearGradient>
+  </defs>
+  <!-- Outer Shield -->
+  <path d="M 100 10 L 175 45 C 175 125 100 185 100 185 C 100 185 25 125 25 45 Z" fill="url(#navyGrad)" stroke="url(#goldGrad)" stroke-width="6"/>
+  <!-- Inner Rim -->
+  <path d="M 100 25 L 160 55 C 160 115 100 165 100 165 C 100 165 40 115 40 55 Z" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="2"/>
+  <!-- Torch / Flame -->
+  <path d="M 100 50 C 90 70 85 85 95 95 C 100 100 105 100 110 95 C 120 85 115 70 100 50 Z" fill="url(#goldGrad)"/>
+  <path d="M 97 95 L 103 95 L 105 130 L 95 130 Z" fill="#ffffff"/>
+  <!-- Open Book -->
+  <path d="M 100 125 C 85 120 70 120 60 125 L 60 145 C 70 140 85 140 100 145 C 115 140 130 140 140 145 L 140 125 C 130 120 115 120 100 125 Z" fill="url(#goldGrad)" stroke="#0b1f3c" stroke-width="2"/>
+  <!-- Text Ring -->
+  <circle cx="100" cy="100" r="85" fill="none" stroke="url(#goldGrad)" stroke-width="1.5" stroke-dasharray="4,4"/>
+</svg>

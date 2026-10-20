@@ -1,0 +1,36 @@
+# Dependencies
+/node_modules
+/.pnpm-store
+
+# Next.js build output
+/.next/
+/out/
+*.tsbuildinfo
+
+# Environment variables
+.env
+.env*.local
+!.env.example
+
+# Database files & Backups
+*.db
+*.db-journal
+*.sqlite
+*.sqlite-journal
+/backups/
+bnw_school_restore_test.db
+
+# Uploads directory
+/public/uploads/
+/uploads/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
