@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Lock, User, ShieldCheck, ArrowRight, AlertCircle, School, Eye, EyeOff, KeyRound } from 'lucide-react';
+import { Lock, User, ShieldCheck, ArrowRight, AlertCircle, School, Eye, EyeOff } from 'lucide-react';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -37,12 +37,6 @@ export default function AdminLoginPage() {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleQuickFill = (userVal: string, passVal: string) => {
-    setIdentifier(userVal);
-    setPassword(passVal);
-    setError(null);
   };
 
   return (
@@ -93,7 +87,7 @@ export default function AdminLoginPage() {
                   id="identifier"
                   type="text"
                   required
-                  placeholder="เช่น admin หรือ admin@bnw.ac.th"
+                  placeholder="กรอกชื่อผู้ใช้ เช่น admin หรืออีเมล"
                   value={identifier}
                   onChange={(e) => setIdentifier(e.target.value)}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-navy-600 focus:border-transparent text-sm"
@@ -113,7 +107,7 @@ export default function AdminLoginPage() {
                   id="password"
                   type={showPassword ? 'text' : 'password'}
                   required
-                  placeholder="รหัสผ่านผู้ดูแล"
+                  placeholder="กรอกรหัสผ่านผู้ดูแล"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-slate-300 focus:outline-none focus:ring-2 focus:ring-brand-navy-600 focus:border-transparent text-sm"
@@ -138,40 +132,6 @@ export default function AdminLoginPage() {
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
-
-          {/* Quick-fill buttons for instant testing */}
-          <div className="mt-5 pt-4 border-t border-slate-100">
-            <span className="text-[11px] font-bold text-slate-600 flex items-center gap-1.5 mb-2.5">
-              <KeyRound className="w-3.5 h-3.5 text-brand-gold-500" />
-              <span>คลิกเพื่อกรอกบัญชีทดสอบอัตโนมัติ:</span>
-            </span>
-            <div className="grid grid-cols-3 gap-2">
-              <button
-                type="button"
-                onClick={() => handleQuickFill('admin', 'Admin@BNW2026!')}
-                className="px-2.5 py-1.5 rounded-lg bg-sky-50 hover:bg-sky-100 border border-sky-200 text-sky-800 text-xs font-semibold text-center transition-colors"
-              >
-                👑 Super Admin
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('editor', 'Editor@BNW2026!')}
-                className="px-2.5 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-800 text-xs font-semibold text-center transition-colors"
-              >
-                ✏️ Editor
-              </button>
-              <button
-                type="button"
-                onClick={() => handleQuickFill('teacher', 'Teacher@BNW2026!')}
-                className="px-2.5 py-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 border border-amber-200 text-amber-800 text-xs font-semibold text-center transition-colors"
-              >
-                📝 ครู / Author
-              </button>
-            </div>
-            <p className="text-[10px] text-slate-400 mt-2 text-center">
-              รองรับทั้งการพิมพ์ <code className="text-slate-600 font-semibold">admin</code> หรือ <code className="text-slate-600 font-semibold">admin@bnw.ac.th</code>
-            </p>
-          </div>
         </div>
 
         <div className="text-center mt-6">
