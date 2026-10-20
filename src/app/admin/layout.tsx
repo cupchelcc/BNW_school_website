@@ -7,7 +7,12 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getCurrentSession();
+  let session = null;
+  try {
+    session = await getCurrentSession();
+  } catch (err) {
+    console.warn('[AdminLayout] Failed to get session:', err);
+  }
 
   // หากยังไม่ได้เข้าสู่ระบบ (เช่น อยู่ที่หน้า /admin/login) ให้เรนเดอร์เฉพาะหน้า children แบบเต็มจอโดยไม่มี Sidebar
   if (!session) {

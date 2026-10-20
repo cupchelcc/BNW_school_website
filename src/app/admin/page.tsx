@@ -25,26 +25,38 @@ export default async function AdminDashboardPage() {
     redirect('/admin/login');
   }
 
-  // ดึงสถิติต่าง ๆ จากฐานข้อมูลจริง
-  const [
-    pagesCount,
-    newsCount,
-    announcementsCount,
-    eventsCount,
-    staffCount,
-    plantsCount,
-    mediaCount,
-    recentLogs,
-  ] = await Promise.all([
-    db.select().from(schema.pages),
-    db.select().from(schema.news),
-    db.select().from(schema.announcements),
-    db.select().from(schema.events),
-    db.select().from(schema.staff),
-    db.select().from(schema.botanicalPlants),
-    db.select().from(schema.mediaFiles),
-    db.select().from(schema.auditLogs).limit(5),
-  ]);
+  let pagesCount: any[] = [];
+  let newsCount: any[] = [];
+  let announcementsCount: any[] = [];
+  let eventsCount: any[] = [];
+  let staffCount: any[] = [];
+  let plantsCount: any[] = [];
+  let mediaCount: any[] = [];
+  let recentLogs: any[] = [];
+
+  try {
+    [
+      pagesCount,
+      newsCount,
+      announcementsCount,
+      eventsCount,
+      staffCount,
+      plantsCount,
+      mediaCount,
+      recentLogs,
+    ] = await Promise.all([
+      db.select().from(schema.pages),
+      db.select().from(schema.news),
+      db.select().from(schema.announcements),
+      db.select().from(schema.events),
+      db.select().from(schema.staff),
+      db.select().from(schema.botanicalPlants),
+      db.select().from(schema.mediaFiles),
+      db.select().from(schema.auditLogs).limit(5),
+    ]);
+  } catch (err) {
+    console.warn('[Admin Dashboard] Failed to load dashboard stats:', err);
+  }
 
   const stats = [
     { label: 'หน้าเว็บใน Page Builder', count: pagesCount.length, icon: FileCode, href: '/admin/pages', color: 'text-sky-600 bg-sky-50' },
