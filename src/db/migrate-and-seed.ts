@@ -314,8 +314,7 @@ export async function runMigrationsAndSeed() {
         ],
       },
       { id: 'm5', title: 'บริการออนไลน์', href: '/e-service', order: 5 },
-      { id: 'm6', title: 'สวนพฤกษศาสตร์', href: '/botanical-garden', order: 6 },
-      { id: 'm7', title: 'ติดต่อเรา', href: '/contact', order: 7 },
+      { id: 'm7', title: 'ติดต่อเรา', href: '/contact', order: 6 },
     ];
 
     await client.execute({
@@ -777,15 +776,6 @@ export async function runMigrationsAndSeed() {
         data: {
           title: 'ปฏิทินกิจกรรมโรงเรียน',
           limit: 2,
-        },
-      },
-      {
-        id: 'blk-botanical',
-        type: 'botanical_highlight',
-        data: {
-          title: 'สวนพฤกษศาสตร์โรงเรียน',
-          subtitle: 'แหล่งเรียนรู้ธรรมชาติ ภูมิปัญญาพันธุ์ไม้ท้องถิ่นรอดพิทยาคม',
-          limit: 3,
         },
       },
       {

@@ -46,7 +46,6 @@ export const AdminShell: React.FC<AdminShellProps> = ({ session, children }) => 
     { href: '/admin/academic', label: 'หลักสูตรและวิชาการ', icon: GraduationCap, iconColor: 'text-indigo-400' },
     { href: '/admin/documents', label: 'เอกสารดาวน์โหลด', icon: FileText, iconColor: 'text-emerald-400' },
     { href: '/admin/e-services', label: 'บริการออนไลน์ (E-Service)', icon: Globe, iconColor: 'text-teal-400' },
-    { href: '/admin/botanical', label: 'สวนพฤกษศาสตร์', icon: TreePine, iconColor: 'text-emerald-400' },
     { type: 'header', label: 'ระบบและอัตลักษณ์' },
     { href: '/admin/media', label: 'คลังรูปภาพและสื่อ (Media)', icon: ImageIcon, iconColor: 'text-pink-400' },
     { href: '/admin/theme', label: 'Theme Customizer', icon: Palette, iconColor: 'text-brand-gold-400' },

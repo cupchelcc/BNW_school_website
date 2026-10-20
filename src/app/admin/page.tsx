@@ -9,7 +9,6 @@ import {
   Megaphone,
   Calendar,
   Users,
-  TreePine,
   Image as ImageIcon,
   Activity,
   ArrowRight,
@@ -30,7 +29,6 @@ export default async function AdminDashboardPage() {
   let announcementsCount: any[] = [];
   let eventsCount: any[] = [];
   let staffCount: any[] = [];
-  let plantsCount: any[] = [];
   let mediaCount: any[] = [];
   let recentLogs: any[] = [];
 
@@ -41,7 +39,6 @@ export default async function AdminDashboardPage() {
       announcementsCount,
       eventsCount,
       staffCount,
-      plantsCount,
       mediaCount,
       recentLogs,
     ] = await Promise.all([
@@ -50,7 +47,6 @@ export default async function AdminDashboardPage() {
       db.select().from(schema.announcements),
       db.select().from(schema.events),
       db.select().from(schema.staff),
-      db.select().from(schema.botanicalPlants),
       db.select().from(schema.mediaFiles),
       db.select().from(schema.auditLogs).limit(5),
     ]);
@@ -64,7 +60,6 @@ export default async function AdminDashboardPage() {
     { label: 'ประกาศของโรงเรียน', count: announcementsCount.length, icon: Megaphone, href: '/admin/announcements', color: 'text-amber-600 bg-amber-50' },
     { label: 'กิจกรรมในปฏิทิน', count: eventsCount.length, icon: Calendar, href: '/admin/events', color: 'text-purple-600 bg-purple-50' },
     { label: 'ทำเนียบบุคลากร', count: staffCount.length, icon: Users, href: '/admin/staff', color: 'text-indigo-600 bg-indigo-50' },
-    { label: 'พรรณไม้สวนพฤกษศาสตร์', count: plantsCount.length, icon: TreePine, href: '/admin/botanical', color: 'text-teal-600 bg-teal-50' },
     { label: 'ไฟล์ในคลังสื่อ (Media)', count: mediaCount.length, icon: ImageIcon, href: '/admin/media', color: 'text-pink-600 bg-pink-50' },
   ];
 

@@ -60,8 +60,7 @@ export default async function PublicLayout({
         ],
       },
       { id: 'm5', title: 'บริการออนไลน์', href: '/e-service', order: 5 },
-      { id: 'm6', title: 'สวนพฤกษศาสตร์', href: '/botanical-garden', order: 6 },
-      { id: 'm7', title: 'ติดต่อเรา', href: '/contact', order: 7 },
+      { id: 'm7', title: 'ติดต่อเรา', href: '/contact', order: 6 },
     ],
   };
 

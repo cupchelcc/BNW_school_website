@@ -136,11 +136,6 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
                   ระบบบริการออนไลน์ (E-Service)
                 </Link>
               </li>
-              <li>
-                <Link href="/botanical-garden" className="hover:text-white transition-colors">
-                  ฐานข้อมูลสวนพฤกษศาสตร์โรงเรียน
-                </Link>
-              </li>
             </ul>
           </div>
 
