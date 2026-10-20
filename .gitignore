@@ -16,6 +16,7 @@
 
 # Database files & Backups
 *.db
+!bnw_school.db
 *.db-journal
 *.sqlite
 *.sqlite-journal
