@@ -7,6 +7,7 @@ import { ContactForm } from '@/components/public/ContactForm';
 import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
 import { getPublicPageContextData } from '@/lib/page-helper-server';
 import { PageBlock } from '@/types/page-builder';
+import { AdminFloatingEditButton } from '@/components/public/AdminFloatingEditButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -18,8 +19,9 @@ export default async function PublicContactPage() {
     if (blocks.length > 0) {
       const contextData = await getPublicPageContextData();
       return (
-        <div>
-          <Breadcrumbs items={[{ label: 'ติดต่อเรา' }]} />
+        <div className="relative">
+          <Breadcrumbs items={[{ label: 'ติดต่อเรา' }]} editSlug="contact" />
+          <AdminFloatingEditButton slug="contact" pageTitle="ติดต่อเรา" />
           <div className="flex flex-col">
             {blocks.map((block) => (
               <BlockRenderer key={block.id} block={block} contextData={contextData} />
@@ -39,8 +41,9 @@ export default async function PublicContactPage() {
   }
 
   return (
-    <div>
-      <Breadcrumbs items={[{ label: 'ติดต่อเรา' }]} />
+    <div className="relative">
+      <Breadcrumbs items={[{ label: 'ติดต่อเรา' }]} editSlug="contact" />
+      <AdminFloatingEditButton slug="contact" pageTitle="ติดต่อเรา" />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">

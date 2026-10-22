@@ -6,6 +6,7 @@ import { GraduationCap, BookOpen, Sparkles, CheckCircle2 } from 'lucide-react';
 import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
 import { getPublicPageContextData } from '@/lib/page-helper-server';
 import { PageBlock } from '@/types/page-builder';
+import { AdminFloatingEditButton } from '@/components/public/AdminFloatingEditButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,8 +18,12 @@ export default async function PublicAcademicPage() {
     if (blocks.length > 0) {
       const contextData = await getPublicPageContextData();
       return (
-        <div>
-          <Breadcrumbs items={[{ label: 'วิชาการ', href: '/academic' }, { label: 'ข้อมูลหลักสูตรการศึกษา' }]} />
+        <div className="relative">
+          <Breadcrumbs
+            items={[{ label: 'วิชาการ', href: '/academic' }, { label: 'ข้อมูลหลักสูตรการศึกษา' }]}
+            editSlug="academic"
+          />
+          <AdminFloatingEditButton slug="academic" pageTitle="งานวิชาการและหลักสูตร" />
           <div className="flex flex-col">
             {blocks.map((block) => (
               <BlockRenderer key={block.id} block={block} contextData={contextData} />
@@ -48,8 +53,12 @@ export default async function PublicAcademicPage() {
   ];
 
   return (
-    <div>
-      <Breadcrumbs items={[{ label: 'วิชาการ', href: '/academic' }, { label: 'ข้อมูลหลักสูตรการศึกษา' }]} />
+    <div className="relative">
+      <Breadcrumbs
+        items={[{ label: 'วิชาการ', href: '/academic' }, { label: 'ข้อมูลหลักสูตรการศึกษา' }]}
+        editSlug="academic"
+      />
+      <AdminFloatingEditButton slug="academic" pageTitle="งานวิชาการและหลักสูตร" />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">

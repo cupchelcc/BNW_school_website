@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm';
 import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
 import { getPublicPageContextData } from '@/lib/page-helper-server';
 import { PageBlock } from '@/types/page-builder';
+import { AdminFloatingEditButton } from '@/components/public/AdminFloatingEditButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,8 +18,12 @@ export default async function StructurePage() {
     if (blocks.length > 0) {
       const contextData = await getPublicPageContextData();
       return (
-        <div>
-          <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'โครงสร้างการบริหาร' }]} />
+        <div className="relative">
+          <Breadcrumbs
+            items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'โครงสร้างการบริหาร' }]}
+            editSlug="about-structure"
+          />
+          <AdminFloatingEditButton slug="about-structure" pageTitle="โครงสร้างการบริหารสถานศึกษา" />
           <div className="flex flex-col">
             {blocks.map((block) => (
               <BlockRenderer key={block.id} block={block} contextData={contextData} />
@@ -57,8 +62,12 @@ export default async function StructurePage() {
   ];
 
   return (
-    <div>
-      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'โครงสร้างการบริหาร' }]} />
+    <div className="relative">
+      <Breadcrumbs
+        items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'โครงสร้างการบริหาร' }]}
+        editSlug="about-structure"
+      />
+      <AdminFloatingEditButton slug="about-structure" pageTitle="โครงสร้างการบริหารสถานศึกษา" />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">

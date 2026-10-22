@@ -6,6 +6,7 @@ import { eq } from 'drizzle-orm';
 import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
 import { getPublicPageContextData } from '@/lib/page-helper-server';
 import { PageBlock } from '@/types/page-builder';
+import { AdminFloatingEditButton } from '@/components/public/AdminFloatingEditButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -17,8 +18,9 @@ export default async function PrivacyPage() {
     if (blocks.length > 0) {
       const contextData = await getPublicPageContextData();
       return (
-        <div>
-          <Breadcrumbs items={[{ label: 'นโยบายความเป็นส่วนตัว' }]} />
+        <div className="relative">
+          <Breadcrumbs items={[{ label: 'นโยบายความเป็นส่วนตัว' }]} editSlug="privacy" />
+          <AdminFloatingEditButton slug="privacy" pageTitle="นโยบายความเป็นส่วนตัว" />
           <div className="flex flex-col">
             {blocks.map((block) => (
               <BlockRenderer key={block.id} block={block} contextData={contextData} />
@@ -30,8 +32,9 @@ export default async function PrivacyPage() {
   }
 
   return (
-    <div>
-      <Breadcrumbs items={[{ label: 'นโยบายความเป็นส่วนตัว' }]} />
+    <div className="relative">
+      <Breadcrumbs items={[{ label: 'นโยบายความเป็นส่วนตัว' }]} editSlug="privacy" />
+      <AdminFloatingEditButton slug="privacy" pageTitle="นโยบายความเป็นส่วนตัว" />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
