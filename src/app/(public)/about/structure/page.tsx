@@ -1,8 +1,34 @@
 import React from 'react';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
-import { Network, Users, BookOpen, Wallet, Wrench, Shield } from 'lucide-react';
+import { BookOpen, Users, Wallet, Wrench, Shield } from 'lucide-react';
+import { db, schema } from '@/db';
+import { eq } from 'drizzle-orm';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
 
-export default function StructurePage() {
+export const dynamic = 'force-dynamic';
+
+export default async function StructurePage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'about-structure')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'โครงสร้างการบริหาร' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   const departments = [
     {
       title: '1. ฝ่ายบริหารงานวิชาการ',
@@ -32,7 +58,7 @@ export default function StructurePage() {
 
   return (
     <div>
-      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }, { label: 'โครงสร้างการบริหาร' }]} />
+      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'โครงสร้างการบริหาร' }]} />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -49,49 +75,42 @@ export default function StructurePage() {
       </section>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-10">
-        {/* Hierarchy Tree Chart */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-          <h2 className="text-xl font-bold text-slate-900 mb-8 text-center flex items-center justify-center gap-2">
-            <Network className="w-6 h-6 text-brand-navy-800" />
-            <span>แผนผังโครงสร้างการบริหารงาน 4 ฝ่าย</span>
-          </h2>
-
-          <div className="flex flex-col items-center">
-            {/* Top: Director & Committee */}
-            <div className="flex flex-col sm:flex-row items-center gap-4 mb-8">
-              <div className="px-6 py-4 rounded-xl bg-brand-navy-900 text-white text-center shadow-md">
-                <span className="text-xs text-brand-gold-400 font-bold block mb-1">ผู้บริหารสูงสุด</span>
-                <span className="font-bold text-sm">ผู้อำนวยการโรงเรียนวัดบางน้ำวน (รอดพิทยาคม)</span>
-              </div>
-              <div className="px-5 py-3 rounded-xl bg-slate-100 text-slate-700 text-center border border-slate-200 text-xs font-semibold">
-                คณะกรรมการสถานศึกษาขั้นพื้นฐาน
-              </div>
-            </div>
-
-            <div className="w-0.5 h-6 bg-slate-300 mb-6" />
-
-            {/* 4 Departments Grid */}
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 w-full">
-              {departments.map((dept, idx) => {
-                const Icon = dept.icon;
-                return (
-                  <div key={idx} className={`p-5 rounded-2xl border ${dept.color} flex flex-col justify-between`}>
-                    <div>
-                      <div className="flex items-center gap-2 font-bold text-sm mb-3">
-                        <Icon className="w-4 h-4" />
-                        <span>{dept.title}</span>
-                      </div>
-                      <ul className="space-y-1.5 text-xs text-slate-600 list-disc list-inside">
-                        {dept.duties.map((d, i) => (
-                          <li key={i} className="leading-snug">{d}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
+        {/* Leadership Card */}
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-center max-w-xl mx-auto">
+          <div className="w-16 h-16 rounded-2xl bg-brand-navy-900 text-brand-gold-400 flex items-center justify-center mx-auto mb-4 font-bold">
+            <Shield className="w-8 h-8" />
           </div>
+          <span className="text-xs font-bold text-brand-gold-600 uppercase tracking-wider">ผู้บริหารสถานศึกษา</span>
+          <h2 className="text-xl font-bold text-slate-900 mt-1">ผู้อำนวยการโรงเรียนวัดบางน้ำวน (รอดพิทยาคม)</h2>
+          <p className="text-xs text-slate-500 mt-2">
+            กำหนดนโยบาย วางแผนยุทธศาสตร์ และกำกับดูแลการดำเนินงานของ 4 ฝ่ายบริหาร
+          </p>
+        </div>
+
+        {/* 4 Departments Grid */}
+        <div className="grid gap-6 sm:grid-cols-2">
+          {departments.map((dept, idx) => {
+            const Icon = dept.icon;
+            return (
+              <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className={`p-2.5 rounded-xl border ${dept.color}`}>
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <h3 className="font-bold text-base text-slate-900">{dept.title}</h3>
+                </div>
+
+                <ul className="space-y-2 text-xs text-slate-600">
+                  {dept.duties.map((duty, dIdx) => (
+                    <li key={dIdx} className="flex items-start gap-2">
+                      <span className="w-1.5 h-1.5 rounded-full bg-slate-400 shrink-0 mt-1.5" />
+                      <span>{duty}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

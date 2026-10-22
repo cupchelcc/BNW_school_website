@@ -8,6 +8,7 @@ interface WrapperProps {
   pageId: string;
   pageSlug: string;
   pageTitle: string;
+  pagePublicUrl: string;
   initialStatus: 'draft' | 'published' | 'archived';
   initialBlocks: PageBlock[];
   canPublish: boolean;
@@ -18,6 +19,7 @@ export const PageBuilderEditorWrapper: React.FC<WrapperProps> = ({
   pageId,
   pageSlug,
   pageTitle,
+  pagePublicUrl,
   initialStatus,
   initialBlocks,
   canPublish,
@@ -43,6 +45,7 @@ export const PageBuilderEditorWrapper: React.FC<WrapperProps> = ({
       pageId={pageId}
       pageSlug={pageSlug}
       pageTitle={pageTitle}
+      pagePublicUrl={pagePublicUrl}
       initialStatus={initialStatus}
       initialBlocks={initialBlocks}
       canPublish={canPublish}

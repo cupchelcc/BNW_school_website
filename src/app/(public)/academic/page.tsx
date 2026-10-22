@@ -1,9 +1,34 @@
 import React from 'react';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { db, schema } from '@/db';
+import { eq } from 'drizzle-orm';
 import { GraduationCap, BookOpen, Sparkles, CheckCircle2 } from 'lucide-react';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
+
+export const dynamic = 'force-dynamic';
 
 export default async function PublicAcademicPage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'academic')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'วิชาการ', href: '/academic' }, { label: 'ข้อมูลหลักสูตรการศึกษา' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   let courses: (typeof schema.academicCourses.$inferSelect)[] = [];
   try {
     courses = await db.select().from(schema.academicCourses);
@@ -65,43 +90,32 @@ export default async function PublicAcademicPage() {
           </div>
         </div>
 
-        {/* Courses from DB */}
+        {/* Levels Offered */}
         <div className="space-y-6">
-          <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
-            <GraduationCap className="w-6 h-6 text-brand-navy-800" />
-            <span>โครงสร้างหลักสูตรแต่ละระดับชั้น</span>
-          </h2>
+          <h2 className="text-2xl font-bold text-slate-900">ระดับชั้นและแผนการศึกษาที่เปิดสอน</h2>
 
-          <div className="grid gap-6">
-            {courses.map((crs) => {
-              const subjects = JSON.parse(crs.learningAreas || '[]');
-              return (
-                <div key={crs.id} className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-4">
-                  <div>
-                    <span className="text-xs font-bold text-brand-gold-600 uppercase tracking-wider block">
-                      ระดับการศึกษา: {crs.level === 'primary' ? 'ประถมศึกษา' : 'มัธยมศึกษา'}
-                    </span>
-                    <h3 className="text-xl font-bold text-slate-900 mt-1">{crs.title}</h3>
-                  </div>
+          <div className="grid gap-6 md:grid-cols-2">
+            <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-700 text-xs font-bold">
+                <Sparkles className="w-3.5 h-3.5" />
+                <span>ระดับปฐมวัย</span>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">ระดับชั้นอนุบาลปีที่ 1 - 3</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                มุ่งเน้นการเตรียมความพร้อมทั้งด้านร่างกาย อารมณ์ สังคม และสติปัญญา ผ่านการจัดกิจกรรมการเรียนรู้แบบบูรณาการและการเล่นอย่างมีความหมาย (Play-based Learning)
+              </p>
+            </div>
 
-                  <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">{crs.description}</p>
-
-                  {subjects.length > 0 && (
-                    <div className="pt-4 border-t border-slate-100">
-                      <h4 className="text-xs font-bold text-slate-700 mb-3">รายวิชาและสัดส่วนเวลาเรียนโดยสังเขป:</h4>
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                        {subjects.map((sub: any, i: number) => (
-                          <div key={i} className="flex justify-between bg-slate-50 p-2.5 rounded-lg border border-slate-100">
-                            <span className="font-semibold text-slate-800">{sub.subject}</span>
-                            <span className="text-slate-500">{sub.credits}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-sky-50 text-sky-700 text-xs font-bold">
+                <GraduationCap className="w-3.5 h-3.5" />
+                <span>ระดับประถมศึกษา</span>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">ระดับชั้นประถมศึกษาปีที่ 1 - 6</h3>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                พัฒนาทักษะการอ่านออกเขียนได้ คิดเลขเป็น ปลูกฝังกระบวนการคิดวิเคราะห์ ทักษะการแก้ปัญหา การใช้เทคโนโลยีดิจิทัล และคุณธรรมจริยธรรมตามวิถีชาวพุทธ
+              </p>
+            </div>
           </div>
         </div>
       </div>

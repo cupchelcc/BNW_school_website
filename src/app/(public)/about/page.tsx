@@ -2,8 +2,34 @@ import React from 'react';
 import Link from 'next/link';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { School, Target, Network, Users, ArrowRight } from 'lucide-react';
+import { db, schema } from '@/db';
+import { eq } from 'drizzle-orm';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
 
-export default function AboutIndexPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function AboutIndexPage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'about')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   const sections = [
     {
       title: 'ประวัติและข้อมูลทั่วไป',

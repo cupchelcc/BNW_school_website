@@ -1,8 +1,34 @@
 import React from 'react';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { Award, Trophy, Medal, Star, CheckCircle } from 'lucide-react';
+import { db, schema } from '@/db';
+import { eq } from 'drizzle-orm';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
 
-export default function AchievementsPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function AchievementsPage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'achievements')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'วิชาการ', href: '/academic' }, { label: 'ผลงานและความสำเร็จ' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   const achievements = [
     {
       title: 'รางวัลเหรียญทอง การแข่งขันความเป็นเลิศทางวิชาการ ระดับเขตพื้นที่ฯ',
@@ -12,11 +38,11 @@ export default function AchievementsPage() {
       category: 'วิชาการ',
     },
     {
-      title: 'สถานศึกษาดีเด่นด้านการอนุรักษ์พันธุกรรมพืชและสวนพฤกษศาสตร์โรงเรียน',
+      title: 'สถานศึกษาดีเด่นด้านการส่งเสริมคุณธรรมและอัตลักษณ์วิถีพุทธ',
       year: '2568',
-      organization: 'โครงการอนุรักษ์พันธุกรรมพืชอันเนื่องมาจากพระราชดำริฯ',
-      description: 'ได้รับเกียรติบัตรการดำเนินงานสวนพฤกษศาสตร์โรงเรียนยอดเยี่ยมประจำจังหวัดสมุทรสาคร',
-      category: 'สิ่งแวดล้อม',
+      organization: 'คณะสงฆ์อำเภอเมืองสมุทรสาคร และสำนักงานพระพุทธศาสนา',
+      description: 'ได้รับยกย่องเป็นโรงเรียนวิถีพุทธชั้นนำที่มีการบูรณาการคุณธรรม จริยธรรม ลงสู่การดำเนินชีวิตจริงของนักเรียน',
+      category: 'คุณธรรมจริยธรรม',
     },
     {
       title: 'รางวัลชนะเลิศ การประกวดมารยาทไทยและสวดมนต์หมู่สรรเสริญพระรัตนตรัย',
@@ -36,7 +62,7 @@ export default function AchievementsPage() {
 
   return (
     <div>
-      <Breadcrumbs items={[{ label: 'วิชาการ' }, { label: 'ผลงานและความสำเร็จ' }]} />
+      <Breadcrumbs items={[{ label: 'วิชาการ', href: '/academic' }, { label: 'ผลงานและความสำเร็จ' }]} />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -52,33 +78,29 @@ export default function AchievementsPage() {
         </div>
       </section>
 
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-6">
-        <div className="grid gap-6">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-12">
+        <div className="grid gap-6 sm:grid-cols-2">
           {achievements.map((item, idx) => (
-            <div
-              key={idx}
-              className="bg-white rounded-2xl border border-slate-200 p-6 sm:p-8 shadow-xs hover:shadow-md transition-shadow flex items-start gap-5"
-            >
-              <div className="w-14 h-14 rounded-2xl bg-amber-50 border border-amber-200 text-amber-600 flex items-center justify-center shrink-0">
-                <Trophy className="w-7 h-7" />
-              </div>
-
-              <div className="flex-1">
-                <div className="flex flex-wrap items-center gap-2 mb-2">
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800">
+            <div key={idx} className="bg-white rounded-2xl border border-slate-200 p-8 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <span className="px-3 py-1 rounded-full bg-brand-gold-50 text-brand-gold-800 text-xs font-bold border border-brand-gold-200">
                     ปีการศึกษา {item.year}
                   </span>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-600">
-                    {item.category}
-                  </span>
+                  <span className="text-xs font-semibold text-slate-400">{item.category}</span>
                 </div>
 
-                <h2 className="text-lg font-bold text-slate-900 leading-snug">{item.title}</h2>
-                <p className="text-xs text-slate-600 mt-2 leading-relaxed">{item.description}</p>
+                <h3 className="font-bold text-slate-900 text-base leading-snug">
+                  {item.title}
+                </h3>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  {item.description}
+                </p>
+              </div>
 
-                <div className="pt-3 mt-3 border-t border-slate-100 text-xs text-slate-400">
-                  หน่วยงานมอบรางวัล: <span className="font-medium text-slate-600">{item.organization}</span>
-                </div>
+              <div className="mt-6 pt-4 border-t border-slate-100 flex items-center gap-2 text-[11px] text-slate-500">
+                <Trophy className="w-4 h-4 text-brand-gold-500 shrink-0" />
+                <span>มอบโดย: {item.organization}</span>
               </div>
             </div>
           ))}

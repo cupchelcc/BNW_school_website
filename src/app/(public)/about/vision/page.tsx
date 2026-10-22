@@ -1,15 +1,40 @@
 import React from 'react';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { Target, Compass, Sparkles, CheckCircle2 } from 'lucide-react';
+import { db, schema } from '@/db';
+import { eq } from 'drizzle-orm';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
 
-export default function VisionPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function VisionPage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'about-vision')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'วิสัยทัศน์ พันธกิจ และอัตลักษณ์' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   const missions = [
     'พัฒนาหลักสูตรสถานศึกษาและการจัดการเรียนรู้ที่เน้นผู้เรียนเป็นสำคัญ พัฒนาทักษะแห่งศตวรรษที่ 21',
     'ปลูกฝังคุณธรรม จริยธรรม ค่านิยมที่พึงประสงค์ และความเป็นพลเมืองดีตามวิถีประชาธิปไตย',
     'ส่งเสริมการใช้เทคโนโลยีดิจิทัลและนวัตกรรมเพื่อการเรียนรู้และการบริหารจัดการ',
     'พัฒนาครูและบุคลากรทางการศึกษาให้มีความเชี่ยวชาญตามมาตรฐานวิชาชีพ',
     'สร้างความร่วมมือระหว่างโรงเรียน ครอบครัว ชุมชน และวัดบางน้ำวน ในการจัดการศึกษาอย่างยั่งยืน',
-    'ขับเคลื่อนงานสวนพฤกษศาสตร์โรงเรียนเพื่อสร้างจิตสำนึกในการอนุรักษ์พันธุกรรมพืชและทรัพยากรธรรมชาติ',
   ];
 
   const goals = [
@@ -21,7 +46,7 @@ export default function VisionPage() {
 
   return (
     <div>
-      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }, { label: 'วิสัยทัศน์ พันธกิจ และอัตลักษณ์' }]} />
+      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'วิสัยทัศน์ พันธกิจ และอัตลักษณ์' }]} />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -50,39 +75,40 @@ export default function VisionPage() {
           </blockquote>
         </div>
 
-        {/* Mission Card */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-          <div className="flex items-center gap-3 text-brand-navy-800 mb-6 font-bold text-lg">
-            <Compass className="w-6 h-6 text-brand-navy-700" />
-            <h2>พันธกิจของโรงเรียน (Mission)</h2>
+        {/* Mission & Goals */}
+        <div className="grid gap-8 md:grid-cols-2">
+          {/* Mission */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <Compass className="w-5 h-5 text-brand-navy-800" />
+              <span>พันธกิจ (Mission)</span>
+            </h2>
+            <ul className="space-y-4">
+              {missions.map((m, idx) => (
+                <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
+                  <span>{m}</span>
+                </li>
+              ))}
+            </ul>
           </div>
 
-          <div className="grid gap-3">
-            {missions.map((m, idx) => (
-              <div key={idx} className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50 border border-slate-100 text-xs sm:text-sm text-slate-700">
-                <span className="w-6 h-6 rounded-full bg-brand-navy-100 text-brand-navy-900 font-bold flex items-center justify-center shrink-0 text-xs">
-                  {idx + 1}
-                </span>
-                <span className="leading-relaxed">{m}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Goals */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-          <div className="flex items-center gap-3 text-brand-navy-800 mb-6 font-bold text-lg">
-            <Sparkles className="w-6 h-6 text-brand-gold-500" />
-            <h2>เป้าประสงค์ (Goals)</h2>
-          </div>
-
-          <div className="grid gap-3 sm:grid-cols-2">
-            {goals.map((g, idx) => (
-              <div key={idx} className="p-4 rounded-xl bg-amber-50/50 border border-amber-200/50 flex items-start gap-2.5 text-xs sm:text-sm text-slate-800">
-                <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                <span className="leading-relaxed">{g}</span>
-              </div>
-            ))}
+          {/* Goals */}
+          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-brand-gold-500" />
+              <span>เป้าประสงค์ (Goals)</span>
+            </h2>
+            <ul className="space-y-4">
+              {goals.map((g, idx) => (
+                <li key={idx} className="flex items-start gap-3 text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  <span className="w-5 h-5 rounded-full bg-brand-gold-100 text-brand-navy-900 font-bold text-xs flex items-center justify-center shrink-0 mt-0.5">
+                    {idx + 1}
+                  </span>
+                  <span>{g}</span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>

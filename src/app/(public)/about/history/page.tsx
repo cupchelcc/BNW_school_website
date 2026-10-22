@@ -1,11 +1,37 @@
 import React from 'react';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
-import { School, MapPin, Award, BookOpen, Clock, HeartHandshake } from 'lucide-react';
+import { School, Award } from 'lucide-react';
+import { db, schema } from '@/db';
+import { eq } from 'drizzle-orm';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
 
-export default function HistoryPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function HistoryPage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'about-history')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'ประวัติและข้อมูลทั่วไป' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   return (
     <div>
-      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }, { label: 'ประวัติและข้อมูลทั่วไป' }]} />
+      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'ประวัติและข้อมูลทั่วไป' }]} />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -35,7 +61,7 @@ export default function HistoryPage() {
             นาม <strong>"รอดพิทยาคม"</strong> ได้รับการสืบทอดมาจากพระเกจิอาจารย์และผู้ทรงคุณูปการสำคัญของวัดบางน้ำวน เพื่อเป็นอนุสรณ์แห่งความเมตตา การเสียสละ และเป็นสิริมงคลแก่คณะครู นักเรียน และบุคลากรทางการศึกษาในการปฏิบัติหน้าที่และใฝ่หาความรู้
           </p>
           <p>
-            ปัจจุบัน โรงเรียนจัดการเรียนการสอนตั้งแต่ระดับชั้นปฐมวัย (อนุบาล) ไปจนถึงระดับชั้นการศึกษาขั้นพื้นฐาน โดยมุ่งเน้นการพัฒนาผู้เรียนทั้งทางด้านสติปัญญา คุณธรรม จริยธรรม สุขอนามัย และการอนุรักษ์สิ่งแวดล้อมท้องถิ่น โดยเฉพาะการมีส่วนร่วมในโครงการสวนพฤกษศาสตร์โรงเรียนและการสืบสานวัฒนธรรมชุมชนบางน้ำวน
+            ปัจจุบัน โรงเรียนจัดการเรียนการสอนตั้งแต่ระดับชั้นปฐมวัย (อนุบาล) ไปจนถึงระดับชั้นการศึกษาขั้นพื้นฐาน โดยมุ่งเน้นการพัฒนาผู้เรียนทั้งทางด้านสติปัญญา คุณธรรม จริยธรรม สุขอนามัย และการสืบสานวัฒนธรรมชุมชนบางน้ำวน
           </p>
         </div>
 
@@ -48,29 +74,20 @@ export default function HistoryPage() {
 
           <div className="grid gap-4 sm:grid-cols-2 text-sm">
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <span className="text-xs text-slate-500 font-bold block mb-1">สีประจำโรงเรียน</span>
-              <p className="font-bold text-slate-900 flex items-center gap-2">
-                <span className="w-3.5 h-3.5 rounded-full bg-blue-900 inline-block" />
-                <span className="w-3.5 h-3.5 rounded-full bg-amber-400 inline-block" />
-                <span>น้ำเงิน - เหลือง</span>
-              </p>
-              <p className="text-xs text-slate-500 mt-1">น้ำเงินหมายถึง ความมั่นคง มีวินัย • เหลืองหมายถึง คุณธรรม ความเจริญงอกงาม</p>
+              <span className="font-bold text-slate-900 block mb-1">สีประจำโรงเรียน</span>
+              <p className="text-slate-600">น้ำเงิน - เหลือง (ความสุขุม มั่นคง และปัญญาอันสว่างไสว)</p>
             </div>
-
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <span className="text-xs text-slate-500 font-bold block mb-1">ปรัชญาของโรงเรียน</span>
-              <p className="font-bold text-slate-900">"คุณธรรมนำความรู้ มุ่งสู่คุณภาพชีวิตที่ดี"</p>
-              <p className="text-xs text-slate-500 mt-1">มุ่งเน้นการสร้างเยาวชนคนดีก่อนคนเก่ง</p>
+              <span className="font-bold text-slate-900 block mb-1">ปรัชญาของโรงเรียน</span>
+              <p className="text-slate-600">สุวิชาโน ภวํ โหติ : ผู้รู้ดี เป็นผู้เจริญ</p>
             </div>
-
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <span className="text-xs text-slate-500 font-bold block mb-1">เอกลักษณ์ของสถานศึกษา</span>
-              <p className="font-bold text-slate-900">"ภูมิทัศน์สะอาด บรรยากาศร่มรื่น มารยาทเด่น"</p>
+              <span className="font-bold text-slate-900 block mb-1">คำขวัญโรงเรียน</span>
+              <p className="text-slate-600">เรียนดี กีฬาเด่น เน้นคุณธรรม สัมพันธ์ชุมชน</p>
             </div>
-
             <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-              <span className="text-xs text-slate-500 font-bold block mb-1">สังกัดหน่วยงาน</span>
-              <p className="font-bold text-slate-900">สำนักงานเขตพื้นที่การศึกษาประถมศึกษาสมุทรสาคร</p>
+              <span className="font-bold text-slate-900 block mb-1">สังกัดหน่วยงาน</span>
+              <p className="text-slate-600">สพป.สมุทรสาคร (สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน)</p>
             </div>
           </div>
         </div>

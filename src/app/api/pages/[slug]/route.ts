@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { db, schema } from '@/db';
 import { eq } from 'drizzle-orm';
 import { getCurrentSession, ROLE_PERMISSIONS } from '@/lib/auth';
 import { logAudit } from '@/lib/audit';
+import { getPagePublicUrl, STANDARD_PAGES } from '@/lib/page-helper';
 
 export async function GET(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
   try {
@@ -97,9 +99,74 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
       });
     }
 
-    return NextResponse.json({ success: true });
+    // ล้าง Cache ของ Next.js ทันที เพื่อให้อัปเดตสดบนหน้าเว็บสาธารณะ
+    const publicUrl = getPagePublicUrl(slug);
+    try {
+      revalidatePath(publicUrl);
+      revalidatePath(publicUrl, 'page');
+      revalidatePath('/', 'layout');
+      revalidatePath('/admin/pages');
+    } catch (revalErr) {
+      console.warn('[Pages API] Revalidation warning:', revalErr);
+    }
+
+    return NextResponse.json({
+      success: true,
+      publicUrl,
+      message: status === 'published' ? 'เผยแพร่และอัปเดตหน้าเว็บจริงเรียบร้อยแล้ว' : 'บันทึกแบบร่างสำเร็จ',
+    });
   } catch (error: any) {
     console.error('Error saving page:', error);
     return NextResponse.json({ success: false, error: 'เกิดข้อผิดพลาดในการบันทึกหน้าเว็บ' }, { status: 500 });
+  }
+}
+
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ slug: string }> }) {
+  try {
+    const session = await getCurrentSession();
+    if (!session) {
+      return NextResponse.json({ success: false, error: 'กรุณาเข้าสู่ระบบก่อนดำเนินการ' }, { status: 401 });
+    }
+
+    // เฉพาะ Super Admin และ Editor ที่มีสิทธิ์ลบหน้าเว็บ
+    if (session.role === 'author') {
+      return NextResponse.json({ success: false, error: 'คุณไม่มีสิทธิ์ลบหน้าเว็บ' }, { status: 403 });
+    }
+
+    const { slug } = await params;
+
+    // ป้องกันการลบหน้าหลักของระบบสถานศึกษา
+    const isStandard = STANDARD_PAGES.some((p) => p.slug === slug);
+    if (isStandard) {
+      return NextResponse.json({ success: false, error: 'ไม่สามารถลบหน้าหลักของระบบสถานศึกษาได้' }, { status: 400 });
+    }
+
+    const existing = await db.select().from(schema.pages).where(eq(schema.pages.slug, slug)).limit(1);
+    if (existing.length === 0) {
+      return NextResponse.json({ success: false, error: 'ไม่พบหน้าเว็บที่ต้องการลบ' }, { status: 404 });
+    }
+
+    await db.delete(schema.pages).where(eq(schema.pages.slug, slug));
+
+    await logAudit({
+      action: 'DELETE_PAGE',
+      entityType: 'page',
+      entityId: existing[0].id,
+      userEmail: session.email,
+      userId: session.userId,
+      details: { slug, title: existing[0].title },
+    });
+
+    try {
+      revalidatePath('/admin/pages');
+      revalidatePath('/', 'layout');
+    } catch (err) {
+      // ignore
+    }
+
+    return NextResponse.json({ success: true, message: 'ลบหน้าเว็บเรียบร้อยแล้ว' });
+  } catch (error: any) {
+    console.error('Error deleting page:', error);
+    return NextResponse.json({ success: false, error: 'เกิดข้อผิดพลาดในการลบหน้าเว็บ' }, { status: 500 });
   }
 }

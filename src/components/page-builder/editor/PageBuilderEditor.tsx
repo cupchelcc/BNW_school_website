@@ -17,6 +17,7 @@ import {
   Sparkles,
   ChevronRight,
   Globe,
+  ExternalLink,
 } from 'lucide-react';
 
 interface PageBuilderEditorProps {
@@ -24,6 +25,7 @@ interface PageBuilderEditorProps {
   initialBlocks: PageBlock[];
   pageTitle: string;
   pageSlug: string;
+  pagePublicUrl?: string;
   initialStatus: 'draft' | 'published' | 'archived';
   canPublish: boolean;
   onSave: (blocks: PageBlock[], status: 'draft' | 'published' | 'archived') => Promise<{ success: boolean; error?: string }>;
@@ -53,6 +55,7 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
   initialBlocks,
   pageTitle,
   pageSlug,
+  pagePublicUrl,
   initialStatus,
   canPublish,
   onSave,
@@ -296,7 +299,31 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
             >
               {saveMessage.type === 'success' ? <CheckCircle className="w-3.5 h-3.5" /> : <AlertCircle className="w-3.5 h-3.5" />}
               <span>{saveMessage.text}</span>
+              {saveMessage.type === 'success' && pagePublicUrl && (
+                <a
+                  href={pagePublicUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="ml-1.5 underline font-bold hover:text-emerald-950 flex items-center gap-0.5"
+                >
+                  <span>เปิดดู ↗</span>
+                </a>
+              )}
             </div>
+          )}
+
+          {/* Direct Live Site Link */}
+          {pagePublicUrl && (
+            <a
+              href={pagePublicUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-300 hover:bg-slate-50 text-slate-700 text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-2xs"
+              title="เปิดดูหน้าเว็บจริงในแท็บใหม่"
+            >
+              <ExternalLink className="w-3.5 h-3.5 text-brand-gold-600" />
+              <span className="hidden sm:inline">ดูหน้าเว็บจริง</span>
+            </a>
           )}
 
           {/* Tab Switcher */}

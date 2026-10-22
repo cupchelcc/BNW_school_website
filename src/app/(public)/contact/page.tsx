@@ -2,10 +2,34 @@ import React from 'react';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { db, schema } from '@/db';
 import { eq } from 'drizzle-orm';
-import { MapPin, Phone, Mail, Clock, Send, School } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { ContactForm } from '@/components/public/ContactForm';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
+
+export const dynamic = 'force-dynamic';
 
 export default async function PublicContactPage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'contact')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'ติดต่อเรา' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   let theme: Partial<typeof schema.themeSettings.$inferSelect> = {};
   try {
     const themeRows = await db.select().from(schema.themeSettings).where(eq(schema.themeSettings.id, 'current')).limit(1);
@@ -52,23 +76,23 @@ export default async function PublicContactPage() {
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-brand-navy-50 text-brand-navy-900 shrink-0 mt-0.5">
+                <div className="p-2.5 rounded-xl bg-brand-gold-50 text-brand-navy-950 shrink-0 mt-0.5">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs text-slate-900 uppercase">เบอร์โทรศัพท์</h3>
+                  <h3 className="font-bold text-xs text-slate-900 uppercase">เบอร์โทรศัพท์ติดต่อ</h3>
                   <p className="text-xs text-slate-600 mt-1">
-                    {theme.contactPhone || '034-490-XXX (อยู่ระหว่างเตรียมข้อมูลติดต่อ)'}
+                    {theme.contactPhone || '034-490-XXX (วันและเวลาราชการ)'}
                   </p>
                 </div>
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-brand-navy-50 text-brand-navy-900 shrink-0 mt-0.5">
+                <div className="p-2.5 rounded-xl bg-sky-50 text-sky-700 shrink-0 mt-0.5">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs text-slate-900 uppercase">อีเมลติดต่อ</h3>
+                  <h3 className="font-bold text-xs text-slate-900 uppercase">อีเมลทางการ</h3>
                   <p className="text-xs text-slate-600 mt-1 font-mono">
                     {theme.contactEmail || 'contact@bnw.ac.th'}
                   </p>
@@ -76,34 +100,26 @@ export default async function PublicContactPage() {
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-brand-navy-50 text-brand-navy-900 shrink-0 mt-0.5">
+                <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700 shrink-0 mt-0.5">
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-xs text-slate-900 uppercase">เวลาทำการ</h3>
-                  <p className="text-xs text-slate-600 mt-1">
-                    วันจันทร์ - วันศุกร์ เวลา 08:00 - 16:30 น. (เว้นวันหยุดราชการ)
+                  <h3 className="font-bold text-xs text-slate-900 uppercase">วันและเวลาเปิดทำการ</h3>
+                  <p className="text-xs text-slate-600 mt-1 leading-relaxed">
+                    จันทร์ - ศุกร์: 08.00 น. - 16.30 น.<br />
+                    (ปิดทำการในวันเสาร์ วันอาทิตย์ และวันหยุดนักขัตฤกษ์)
                   </p>
                 </div>
               </div>
             </div>
-
-            {/* Travel Directions Note */}
-            <div className="bg-amber-50 border border-amber-200 rounded-2xl p-6 text-xs text-amber-900 leading-relaxed space-y-2">
-              <span className="font-bold block text-sm">การเดินทางมายังโรงเรียน:</span>
-              <p>
-                ตั้งอยู่ติดกับบริเวณวัดบางน้ำวน ตำบลบางน้ำวน อำเภอเมืองสมุทรสาคร สามารถเดินทางจากถนนพระราม 2 เข้าสู่ถนนสายสมุทรสาคร-บางน้ำวน โดยมีป้ายบอกทางชัดเจน
-              </p>
-            </div>
           </div>
 
-          {/* Contact Message Form */}
+          {/* Form */}
           <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-2">ส่งข้อความติดต่อสอบถาม</h2>
+            <h2 className="text-xl font-bold text-slate-900 mb-2">ส่งข้อความติดต่อฝ่ายธุรการ</h2>
             <p className="text-xs text-slate-500 mb-6">
-              กรอกแบบฟอร์มเพื่อส่งข้อความหรือข้อเสนอแนะถึงฝ่ายธุรการโรงเรียน
+              กรอกข้อมูลเพื่อส่งข้อความหรือสอบถามเรื่องการศึกษา เจ้าหน้าที่จะตอบกลับโดยเร็วที่สุด
             </p>
-
             <ContactForm />
           </div>
         </div>

@@ -1,8 +1,34 @@
 import React from 'react';
 import { Breadcrumbs } from '@/components/public/Breadcrumbs';
 import { ShieldCheck, Lock, FileText, UserCheck, AlertCircle } from 'lucide-react';
+import { db, schema } from '@/db';
+import { eq } from 'drizzle-orm';
+import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
+import { getPublicPageContextData } from '@/lib/page-helper-server';
+import { PageBlock } from '@/types/page-builder';
 
-export default function PrivacyPage() {
+export const dynamic = 'force-dynamic';
+
+export default async function PrivacyPage() {
+  const pageRows = await db.select().from(schema.pages).where(eq(schema.pages.slug, 'privacy')).limit(1);
+
+  if (pageRows.length > 0 && pageRows[0].status === 'published') {
+    const blocks: PageBlock[] = JSON.parse(pageRows[0].content || '[]');
+    if (blocks.length > 0) {
+      const contextData = await getPublicPageContextData();
+      return (
+        <div>
+          <Breadcrumbs items={[{ label: 'นโยบายความเป็นส่วนตัว' }]} />
+          <div className="flex flex-col">
+            {blocks.map((block) => (
+              <BlockRenderer key={block.id} block={block} contextData={contextData} />
+            ))}
+          </div>
+        </div>
+      );
+    }
+  }
+
   return (
     <div>
       <Breadcrumbs items={[{ label: 'นโยบายความเป็นส่วนตัว' }]} />
@@ -22,7 +48,6 @@ export default function PrivacyPage() {
       </section>
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-8 text-slate-700 leading-relaxed text-sm">
-        {/* Compliance statement as mandated by Section 15 */}
         <div className="bg-blue-50 border border-blue-200 rounded-2xl p-6 text-xs text-blue-900 flex items-start gap-3">
           <AlertCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
           <div>
@@ -49,30 +74,32 @@ export default function PrivacyPage() {
 
           <section className="space-y-3 pt-4 border-t border-slate-100">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <Lock className="w-5 h-5 text-brand-navy-800" />
+              <Lock className="w-5 h-5 text-brand-gold-500" />
               <span>2. วัตถุประสงค์ในการประมวลผลข้อมูล</span>
             </h2>
-            <ul className="list-disc list-inside space-y-1.5 pl-2 text-xs text-slate-600">
-              <li>เพื่อการบริหารจัดการเนื้อหาบนเว็บไซต์โรงเรียน</li>
-              <li>เพื่อการตอบข้อซักถามและการติดต่อประสานงานระหว่างผู้ปกครองกับสถานศึกษา</li>
-              <li>เพื่อการรักษาความปลอดภัยของระบบ และตรวจสอบกิจกรรมที่ไม่พึงประสงค์ (Audit Logs)</li>
-              <li>โรงเรียนไม่มีนโยบายการจำหน่าย แลกเปลี่ยน หรือส่งต่อข้อมูลส่วนบุคคลไปยังบุคคลภายนอกเชิงพาณิชย์โดยเด็ดขาด</li>
-            </ul>
+            <p>
+              ข้อมูลทั้งหมดจะถูกใช้เพื่อการบริหารจัดการการศึกษา การประชาสัมพันธ์ข่าวสารโรงเรียน และการให้บริการระบบธุรกรรมอิเล็กทรอนิกส์ (E-Service) ตามอำนาจหน้าที่ของสถานศึกษาเท่านั้น จะไม่มีการนำข้อมูลส่วนบุคคลไปจำหน่ายหรือเผยแพร่แก่บุคคลภายนอกโดยมิชอบ
+            </p>
           </section>
 
           <section className="space-y-3 pt-4 border-t border-slate-100">
             <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-              <UserCheck className="w-5 h-5 text-brand-navy-800" />
-              <span>3. สิทธิของเจ้าของข้อมูลส่วนบุคคล</span>
+              <ShieldCheck className="w-5 h-5 text-emerald-600" />
+              <span>3. การรักษาความมั่นคงปลอดภัย</span>
             </h2>
-            <p className="text-xs text-slate-600">
-              ท่านในฐานะเจ้าของข้อมูลส่วนบุคคล มีสิทธิตามกฎหมายในการขอเข้าถึง ขอรับสำเนา ขอแก้ไขข้อมูลให้ถูกต้อง ขอให้ลบหรือทำลายข้อมูล และขอคัดค้านการประมวลผลข้อมูลส่วนบุคคลของท่าน โดยสามารถติดต่อเจ้าหน้าที่คุ้มครองข้อมูลของโรงเรียนได้ที่:
+            <p>
+              โรงเรียนกำหนดมาตรการทางเทคนิคและการบริหารจัดการเพื่อป้องกันการเข้าถึงข้อมูลโดยมิได้รับอนุญาต การสูญหาย หรือการทำลายข้อมูล โดยใช้ระบบการยืนยันตัวตนด้วยรหัสผ่านที่มีความซับซ้อนและการเข้ารหัสช่องทางการสื่อสารผ่านโพรโทคอล HTTPS (SSL/TLS)
             </p>
-            <div className="p-4 bg-slate-50 rounded-xl border border-slate-200 text-xs font-medium space-y-1">
-              <p><strong>ฝ่ายงานข้อมูลสารสนเทศ โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)</strong></p>
-              <p>อีเมล: <span className="font-mono text-brand-navy-700">contact@bnw.ac.th</span></p>
-              <p>ที่อยู่: ตำบลบางน้ำวน อำเภอเมืองสมุทรสาคร จังหวัดสมุทรสาคร 74000</p>
-            </div>
+          </section>
+
+          <section className="space-y-3 pt-4 border-t border-slate-100">
+            <h2 className="text-lg font-bold text-slate-900 flex items-center gap-2">
+              <UserCheck className="w-5 h-5 text-sky-600" />
+              <span>4. สิทธิของเจ้าของข้อมูลส่วนบุคคล</span>
+            </h2>
+            <p>
+              ท่านมีสิทธิ์ในการขอเข้าถึง ขอรับสำเนา ขอแก้ไข หรือขอลบข้อมูลส่วนบุคคลของท่านได้ตามที่กฎหมายกำหนด โดยสามารถติดต่อเจ้าหน้าที่คุ้มครองข้อมูลส่วนบุคคลของโรงเรียนวัดบางน้ำวน (รอดพิทยาคม) ได้ที่อีเมล: <code className="text-slate-800 font-mono bg-slate-100 px-1 py-0.5 rounded">contact@bnw.ac.th</code>
+            </p>
           </section>
         </div>
       </div>
