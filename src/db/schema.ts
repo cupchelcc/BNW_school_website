@@ -52,7 +52,7 @@ export const themeSettings = sqliteTable('theme_settings', {
   id: text('id').primaryKey().default('current'),
   siteName: text('site_name').notNull().default('โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)'),
   siteDescription: text('site_description').default('สถานศึกษาแห่งการเรียนรู้ มุ่งสู่คุณภาพ คุณธรรมนำความรู้'),
-  logoUrl: text('logo_url').default('/images/logo-placeholder.svg'),
+  logoUrl: text('logo_url').default('/images/logo.png'),
   faviconUrl: text('favicon_url').default('/favicon.ico'),
   primaryColor: text('primary_color').notNull().default('#0b1f3c'), // Navy Blue
   secondaryColor: text('secondary_color').notNull().default('#eab308'), // Gold/Yellow

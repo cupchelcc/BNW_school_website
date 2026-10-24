@@ -12,7 +12,7 @@ export default async function PublicLayout({
   let themeData = {
     siteName: 'โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)',
     siteDescription: 'สถานศึกษาแห่งการเรียนรู้ มุ่งสู่คุณภาพ คุณธรรมนำความรู้',
-    logoUrl: '/images/logo-placeholder.svg',
+    logoUrl: '/images/logo.png',
     primaryColor: '#0b1f3c',
     secondaryColor: '#eab308',
     footerCopyright: '© 2026 โรงเรียนวัดบางน้ำวน (รอดพิทยาคม) สงวนลิขสิทธิ์',
@@ -71,7 +71,7 @@ export default async function PublicLayout({
       themeData = {
         siteName: row.siteName || 'โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)',
         siteDescription: row.siteDescription || '',
-        logoUrl: row.logoUrl || '/images/logo-placeholder.svg',
+        logoUrl: (row.logoUrl && !row.logoUrl.includes('placeholder')) ? row.logoUrl : '/images/logo.png',
         primaryColor: row.primaryColor || '#0b1f3c',
         secondaryColor: row.secondaryColor || '#eab308',
         footerCopyright: row.footerCopyright || '',

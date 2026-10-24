@@ -130,9 +130,21 @@ export const Header: React.FC<HeaderProps> = ({ theme }) => {
       {/* Main Navigation Header */}
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 w-full relative">
         {/* School Logo & Title */}
-        <Link href="/" className="flex items-center gap-2.5 sm:gap-3 group min-w-0 flex-1">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl bg-brand-navy-900 text-brand-gold-400 flex items-center justify-center font-bold shadow-md group-hover:scale-105 transition-transform shrink-0">
-            <School className="w-6 h-6 sm:w-7 sm:h-7" />
+        <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group min-w-0 flex-1">
+          <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-white/90 p-1 flex items-center justify-center shadow-[0_4px_16px_rgba(11,31,60,0.1)] border border-white/80 group-hover:scale-105 transition-transform shrink-0 overflow-hidden">
+            {theme.logoUrl ? (
+              <img
+                src={theme.logoUrl}
+                alt={theme.siteName}
+                className="w-full h-full object-contain"
+              />
+            ) : (
+              <img
+                src="/images/logo.png"
+                alt={theme.siteName}
+                className="w-full h-full object-contain"
+              />
+            )}
           </div>
           <div className="min-w-0 flex-1">
             <span className="font-bold text-sm sm:text-base lg:text-lg text-slate-900 group-hover:text-brand-navy-800 leading-tight block truncate">

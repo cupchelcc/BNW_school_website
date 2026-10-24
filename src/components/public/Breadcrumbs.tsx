@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { ChevronRight, Home, Edit3 } from 'lucide-react';
+import { ChevronRight, Home } from 'lucide-react';
 
 interface Crumb {
   label: string;
@@ -12,7 +12,7 @@ interface BreadcrumbsProps {
   editSlug?: string;
 }
 
-export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, editSlug }) => {
+export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items }) => {
   return (
     <nav aria-label="Breadcrumb" className="bg-white/60 backdrop-blur-xl border-b border-white/60 shadow-2xs py-2.5 px-4 sm:px-6 relative z-20">
       <div className="max-w-7xl mx-auto flex items-center justify-between gap-2 text-xs">
@@ -38,18 +38,6 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = ({ items, editSlug }) => 
             );
           })}
         </div>
-
-        {editSlug && (
-          <Link
-            href={`/admin/pages/${editSlug}`}
-            className="shrink-0 px-3 py-1.5 rounded-xl bg-brand-navy-950/85 hover:bg-brand-navy-900 text-white font-semibold text-xs flex items-center gap-1.5 shadow-sm border border-brand-gold-500/40 backdrop-blur-md transition-all hover:scale-105 active:scale-95"
-            title="เปิดแก้ไขหน้านี้ในระบบ Visual Page Builder"
-          >
-            <Edit3 className="w-3.5 h-3.5 text-brand-gold-400" />
-            <span className="hidden sm:inline">แก้ไขหน้านี้ (Page Builder)</span>
-            <span className="sm:hidden">แก้ไข</span>
-          </Link>
-        )}
       </div>
     </nav>
   );

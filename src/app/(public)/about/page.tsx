@@ -7,7 +7,6 @@ import { eq } from 'drizzle-orm';
 import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
 import { getPublicPageContextData } from '@/lib/page-helper-server';
 import { PageBlock } from '@/types/page-builder';
-import { AdminFloatingEditButton } from '@/components/public/AdminFloatingEditButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -20,8 +19,7 @@ export default async function AboutIndexPage() {
       const contextData = await getPublicPageContextData();
       return (
         <div className="relative">
-          <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }]} editSlug="about" />
-          <AdminFloatingEditButton slug="about" pageTitle="ข้อมูลพื้นฐานสถานศึกษา" />
+          <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }]} />
           <div className="flex flex-col">
             {blocks.map((block) => (
               <BlockRenderer key={block.id} block={block} contextData={contextData} />
@@ -65,8 +63,7 @@ export default async function AboutIndexPage() {
 
   return (
     <div className="relative">
-      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }]} editSlug="about" />
-      <AdminFloatingEditButton slug="about" pageTitle="ข้อมูลพื้นฐานสถานศึกษา" />
+      <Breadcrumbs items={[{ label: 'ข้อมูลโรงเรียน' }]} />
 
       <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">

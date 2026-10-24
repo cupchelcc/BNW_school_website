@@ -4,7 +4,6 @@ import { eq } from 'drizzle-orm';
 import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
 import { getPublicPageContextData } from '@/lib/page-helper-server';
 import { PageBlock } from '@/types/page-builder';
-import { AdminFloatingEditButton } from '@/components/public/AdminFloatingEditButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -19,7 +18,6 @@ export default async function HomePage() {
 
   return (
     <div className="flex flex-col relative">
-      <AdminFloatingEditButton slug="home" pageTitle="หน้าแรก" />
       {blocks.map((block) => (
         <BlockRenderer key={block.id} block={block} contextData={contextData} />
       ))}

@@ -6,7 +6,6 @@ import { eq } from 'drizzle-orm';
 import { BlockRenderer } from '@/components/page-builder/renderer/BlockRenderer';
 import { getPublicPageContextData } from '@/lib/page-helper-server';
 import { PageBlock } from '@/types/page-builder';
-import { AdminFloatingEditButton } from '@/components/public/AdminFloatingEditButton';
 
 export const dynamic = 'force-dynamic';
 
@@ -21,9 +20,7 @@ export default async function VisionPage() {
         <div className="relative">
           <Breadcrumbs
             items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'วิสัยทัศน์ พันธกิจ และอัตลักษณ์' }]}
-            editSlug="about-vision"
           />
-          <AdminFloatingEditButton slug="about-vision" pageTitle="วิสัยทัศน์ พันธกิจ และอัตลักษณ์" />
           <div className="flex flex-col">
             {blocks.map((block) => (
               <BlockRenderer key={block.id} block={block} contextData={contextData} />
@@ -53,9 +50,7 @@ export default async function VisionPage() {
     <div className="relative">
       <Breadcrumbs
         items={[{ label: 'ข้อมูลโรงเรียน', href: '/about' }, { label: 'วิสัยทัศน์ พันธกิจ และอัตลักษณ์' }]}
-        editSlug="about-vision"
       />
-      <AdminFloatingEditButton slug="about-vision" pageTitle="วิสัยทัศน์ พันธกิจ และอัตลักษณ์" />
 
       <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
         <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />

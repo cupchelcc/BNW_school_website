@@ -44,8 +44,8 @@ export default function AdminLoginPage() {
       <div className="w-full max-w-md mx-auto">
         {/* Brand Header */}
         <div className="text-center mb-6 sm:mb-8">
-          <div className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-3 sm:mb-4 bg-brand-gold-500 rounded-2xl flex items-center justify-center shadow-lg shadow-brand-gold-500/20 text-brand-navy-950">
-            <School className="w-8 h-8 sm:w-9 sm:h-9" />
+          <div className="w-20 h-20 mx-auto mb-4 bg-white/10 p-2 rounded-3xl flex items-center justify-center shadow-xl border border-white/20 backdrop-blur-md overflow-hidden">
+            <img src="/images/logo.png" alt="โลโก้โรงเรียน" className="w-full h-full object-contain drop-shadow" />
           </div>
           <h1 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
             โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)

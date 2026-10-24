@@ -58,8 +58,8 @@ export const AdminShell: React.FC<AdminShellProps> = ({ session, children }) => 
       {/* Brand */}
       <div className="p-4 sm:p-5 border-b border-brand-navy-900 flex items-center justify-between">
         <Link href="/admin" className="flex items-center gap-3">
-          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-brand-gold-500 text-brand-navy-950 flex items-center justify-center font-bold shrink-0">
-            <School className="w-5 h-5 sm:w-6 sm:h-6" />
+          <div className="w-10 h-10 rounded-xl bg-white/10 p-1 flex items-center justify-center shrink-0 border border-white/15 overflow-hidden">
+            <img src="/images/logo.png" alt="โลโก้โรงเรียน" className="w-full h-full object-contain" />
           </div>
           <div className="min-w-0">
             <h2 className="font-bold text-sm tracking-tight text-white leading-tight truncate">

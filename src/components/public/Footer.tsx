@@ -6,6 +6,7 @@ interface FooterProps {
   theme: {
     siteName: string;
     siteDescription?: string | null;
+    logoUrl?: string | null;
     footerCopyright?: string | null;
     contactPhone?: string | null;
     contactEmail?: string | null;
@@ -28,9 +29,13 @@ export const Footer: React.FC<FooterProps> = ({ theme }) => {
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4 pb-12 border-b border-white/10">
           {/* Col 1: Identity */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-brand-gold-400 to-brand-gold-500 text-brand-navy-950 flex items-center justify-center font-bold shadow-[0_4px_16px_rgba(234,179,8,0.25)] border border-brand-gold-300">
-                <School className="w-7 h-7" />
+            <div className="flex items-center gap-3.5">
+              <div className="w-13 h-13 rounded-2xl bg-white/10 p-1 flex items-center justify-center font-bold shadow-[0_4px_16px_rgba(234,179,8,0.2)] border border-white/20 backdrop-blur-md shrink-0 overflow-hidden">
+                <img
+                  src={theme.logoUrl || '/images/logo.png'}
+                  alt={theme.siteName}
+                  className="w-full h-full object-contain drop-shadow"
+                />
               </div>
               <div>
                 <h3 className="font-bold text-base leading-tight tracking-tight">{theme.siteName}</h3>

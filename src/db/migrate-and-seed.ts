@@ -54,7 +54,7 @@ export async function runMigrationsAndSeed() {
       id TEXT PRIMARY KEY DEFAULT 'current',
       site_name TEXT NOT NULL DEFAULT 'โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)',
       site_description TEXT DEFAULT 'สถานศึกษาแห่งการเรียนรู้ มุ่งสู่คุณภาพ คุณธรรมนำความรู้',
-      logo_url TEXT DEFAULT '/images/logo-placeholder.svg',
+      logo_url TEXT DEFAULT '/images/logo.png',
       favicon_url TEXT DEFAULT '/favicon.ico',
       primary_color TEXT NOT NULL DEFAULT '#0b1f3c',
       secondary_color TEXT NOT NULL DEFAULT '#eab308',
@@ -330,7 +330,7 @@ export async function runMigrationsAndSeed() {
         'current',
         'โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)',
         'สถานศึกษาแห่งการเรียนรู้ มุ่งสู่คุณภาพ คุณธรรมนำความรู้ สังกัด สพป.สมุทรสาคร',
-        '/images/logo-placeholder.svg',
+        '/images/logo.png',
         '/favicon.ico',
         '#0b1f3c', // Navy Blue
         '#eab308', // Gold
