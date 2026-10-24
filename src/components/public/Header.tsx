@@ -92,14 +92,14 @@ export const Header: React.FC<HeaderProps> = ({ theme }) => {
 
   return (
     <header
-      className={`sticky top-0 z-50 transition-all duration-200 w-full max-w-full ${
+      className={`sticky top-0 z-50 transition-all duration-300 w-full max-w-full ${
         isScrolled
-          ? 'bg-white/98 shadow-md border-b border-slate-300/80 backdrop-blur-md'
-          : 'bg-white/95 shadow-xs border-b border-slate-200/80 backdrop-blur-md'
+          ? 'bg-white/85 shadow-[0_12px_32px_rgba(11,31,60,0.08)] border-b border-white/80 backdrop-blur-2xl'
+          : 'bg-white/75 shadow-xs border-b border-white/60 backdrop-blur-xl'
       }`}
     >
       {/* Top Banner (Affiliation & Search) */}
-      <div className="bg-brand-navy-950 text-white text-xs py-2 px-3 sm:px-6 w-full">
+      <div className="bg-brand-navy-950/95 backdrop-blur-md text-white text-xs py-2 px-3 sm:px-6 w-full border-b border-white/5">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-2">
           <div className="flex items-center gap-1.5 sm:gap-2 min-w-0 flex-1">
             <span className="w-2 h-2 rounded-full bg-brand-gold-400 animate-pulse shrink-0" />
@@ -164,33 +164,33 @@ export const Header: React.FC<HeaderProps> = ({ theme }) => {
                   <button
                     type="button"
                     onClick={() => toggleDropdown(item.id)}
-                    className={`px-3.5 py-2 rounded-lg flex items-center gap-1 transition-colors select-none ${
+                    className={`px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all select-none ${
                       isOpen
-                        ? 'text-brand-navy-900 bg-slate-100 font-semibold'
-                        : 'text-slate-700 hover:text-brand-navy-900 hover:bg-slate-100'
+                        ? 'text-brand-navy-950 bg-white/90 shadow-sm border border-white/80 font-bold backdrop-blur-md'
+                        : 'text-slate-700 hover:text-brand-navy-900 hover:bg-white/60 hover:shadow-2xs backdrop-blur-xs'
                     }`}
                     aria-expanded={isOpen}
                   >
                     <span>{item.title}</span>
                     <ChevronDown
                       className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-brand-navy-900' : ''
+                        isOpen ? 'rotate-180 text-brand-gold-600 opacity-100' : ''
                       }`}
                     />
                   </button>
                 ) : (
                   <Link
                     href={item.href}
-                    className="px-3.5 py-2 rounded-lg text-slate-700 hover:text-brand-navy-900 hover:bg-slate-100 flex items-center gap-1 transition-colors"
+                    className="px-3.5 py-2 rounded-xl text-slate-700 hover:text-brand-navy-900 hover:bg-white/60 hover:shadow-2xs flex items-center gap-1 transition-all"
                   >
                     <span>{item.title}</span>
                   </Link>
                 )}
 
-                {/* Dropdown Menu พร้อม Invisible Bridge ป้องกันเมาส์หลุดช่องว่าง */}
+                {/* Dropdown Menu พร้อม Modern Glassmorphism & Invisible Bridge */}
                 {hasChildren && isOpen && (
-                  <div className="absolute left-0 top-full pt-1.5 w-64 z-50 animate-in fade-in slide-in-from-top-1 duration-150">
-                    <div className="bg-white rounded-2xl shadow-2xl border border-slate-200/90 py-2 relative before:content-[''] before:absolute before:-top-3 before:left-0 before:right-0 before:h-3">
+                  <div className="absolute left-0 top-full pt-2 w-64 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
+                    <div className="bg-white/85 backdrop-blur-2xl rounded-2xl shadow-[0_20px_50px_rgba(11,31,60,0.15)] border border-white/90 p-2 relative before:content-[''] before:absolute before:-top-3 before:left-0 before:right-0 before:h-3">
                       {item.children!.map((child) => (
                         <Link
                           key={child.id}
@@ -199,7 +199,7 @@ export const Header: React.FC<HeaderProps> = ({ theme }) => {
                             setActiveDropdown(null);
                             setIsClickLocked(false);
                           }}
-                          className="block px-4 py-2.5 text-xs font-semibold text-slate-700 hover:bg-brand-navy-50 hover:text-brand-navy-900 transition-colors"
+                          className="block px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-700 hover:bg-brand-navy-50/80 hover:text-brand-navy-900 hover:translate-x-1 transition-all"
                         >
                           {child.title}
                         </Link>

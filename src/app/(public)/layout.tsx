@@ -89,10 +89,19 @@ export default async function PublicLayout({
   }
 
   return (
-    <>
-      <Header theme={themeData} />
-      <main className="flex-1 w-full max-w-full overflow-x-clip">{children}</main>
-      <Footer theme={themeData} />
-    </>
+    <div className="relative min-h-screen flex flex-col w-full max-w-full overflow-x-clip bg-slate-50/80">
+      {/* Ambient background light orbs for Modern Glassmorphism depth */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0" aria-hidden="true">
+        <div className="absolute -top-32 -right-32 w-[32rem] h-[32rem] rounded-full bg-gradient-to-br from-brand-gold-400/15 via-amber-300/10 to-transparent blur-3xl animate-ambient" />
+        <div className="absolute top-1/3 -left-36 w-[30rem] h-[30rem] rounded-full bg-gradient-to-tr from-brand-navy-600/10 via-blue-400/10 to-transparent blur-3xl animate-ambient [animation-delay:5s]" />
+        <div className="absolute bottom-1/4 -right-20 w-[28rem] h-[28rem] rounded-full bg-gradient-to-tl from-amber-400/12 via-yellow-200/10 to-transparent blur-3xl animate-ambient [animation-delay:10s]" />
+      </div>
+
+      <div className="relative z-10 flex flex-col min-h-screen">
+        <Header theme={themeData} />
+        <main className="flex-1 w-full max-w-full">{children}</main>
+        <Footer theme={themeData} />
+      </div>
+    </div>
   );
 }

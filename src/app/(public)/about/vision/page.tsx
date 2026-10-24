@@ -57,8 +57,9 @@ export default async function VisionPage() {
       />
       <AdminFloatingEditButton slug="about-vision" pageTitle="วิสัยทัศน์ พันธกิจ และอัตลักษณ์" />
 
-      <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             ทิศทางการพัฒนาสถานศึกษา
           </span>
@@ -73,9 +74,12 @@ export default async function VisionPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-10">
         {/* Vision Card */}
-        <div className="bg-gradient-to-br from-brand-navy-900 to-brand-navy-950 text-white rounded-2xl p-8 sm:p-10 shadow-lg relative overflow-hidden">
+        <div className="relative bg-brand-navy-950/90 backdrop-blur-2xl border border-white/15 text-white rounded-3xl p-8 sm:p-10 shadow-2xl overflow-hidden">
+          <div className="absolute -right-10 -bottom-10 w-48 h-48 rounded-full bg-brand-gold-400/10 blur-2xl pointer-events-none" />
           <div className="flex items-center gap-3 text-brand-gold-400 mb-4 font-bold text-sm">
-            <Target className="w-5 h-5" />
+            <div className="p-2 rounded-xl bg-white/10 backdrop-blur-md border border-white/10 text-brand-gold-400">
+              <Target className="w-5 h-5" />
+            </div>
             <span>วิสัยทัศน์สถานศึกษา (Vision)</span>
           </div>
           <blockquote className="text-xl sm:text-2xl font-bold leading-relaxed text-white">
@@ -87,9 +91,11 @@ export default async function VisionPage() {
         {/* Mission & Goals */}
         <div className="grid gap-8 md:grid-cols-2">
           {/* Mission */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-              <Compass className="w-5 h-5 text-brand-navy-800" />
+          <div className="bg-white/75 backdrop-blur-xl rounded-3xl border border-white/80 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
+              <div className="p-2 bg-brand-navy-50 text-brand-navy-800 rounded-xl border border-brand-navy-100">
+                <Compass className="w-5 h-5" />
+              </div>
               <span>พันธกิจ (Mission)</span>
             </h2>
             <ul className="space-y-4">
@@ -103,9 +109,11 @@ export default async function VisionPage() {
           </div>
 
           {/* Goals */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-brand-gold-500" />
+          <div className="bg-white/75 backdrop-blur-xl rounded-3xl border border-white/80 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
+              <div className="p-2 bg-brand-gold-50 text-brand-gold-700 rounded-xl border border-brand-gold-200">
+                <Sparkles className="w-5 h-5" />
+              </div>
               <span>เป้าประสงค์ (Goals)</span>
             </h2>
             <ul className="space-y-4">

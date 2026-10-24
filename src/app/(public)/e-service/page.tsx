@@ -18,8 +18,9 @@ export default async function PublicEServicePage() {
     <div>
       <Breadcrumbs items={[{ label: 'บริการออนไลน์ (E-Service)' }]} />
 
-      <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             Online Education Services
           </span>
@@ -34,7 +35,7 @@ export default async function PublicEServicePage() {
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12 space-y-8">
         {/* Transparency note as mandated by Section 13.6 */}
-        <div className="p-4 bg-amber-50 border border-amber-200 rounded-2xl text-xs text-amber-900 flex items-start gap-3">
+        <div className="p-4 bg-amber-500/10 backdrop-blur-md border border-amber-500/20 rounded-2xl text-xs text-amber-950 flex items-start gap-3 shadow-xs">
           <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
           <div className="leading-relaxed">
             <span className="font-bold">หมายเหตุการใช้งาน:</span> ลิงก์ที่มีสัญลักษณ์{' '}
@@ -46,14 +47,14 @@ export default async function PublicEServicePage() {
           {services.map((svc) => (
             <div
               key={svc.id}
-              className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs hover:shadow-md hover:border-brand-navy-300 transition-all flex flex-col justify-between group"
+              className="bg-white/80 backdrop-blur-xl rounded-2xl border border-white/80 p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(11,31,60,0.1)] hover:border-brand-navy-300/70 hover:-translate-y-1 transition-all flex flex-col justify-between group"
             >
               <div>
                 <div className="flex items-start justify-between mb-4">
-                  <div className="p-3 bg-brand-navy-50 text-brand-navy-800 rounded-xl group-hover:bg-brand-navy-900 group-hover:text-white transition-colors">
+                  <div className="p-3 bg-brand-navy-50/80 border border-brand-navy-100 text-brand-navy-800 rounded-xl group-hover:bg-brand-navy-800 group-hover:text-brand-gold-400 group-hover:shadow-md transition-all">
                     <GraduationCap className="w-6 h-6" />
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-slate-100 text-slate-600">
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-white/80 border border-slate-200/80 text-slate-600 backdrop-blur-sm">
                     {svc.targetGroup === 'students'
                       ? 'สำหรับนักเรียน'
                       : svc.targetGroup === 'parents'
@@ -62,7 +63,7 @@ export default async function PublicEServicePage() {
                   </span>
                 </div>
 
-                <h2 className="font-bold text-base text-slate-900 group-hover:text-brand-navy-700 mb-2">
+                <h2 className="font-bold text-base text-slate-900 group-hover:text-brand-navy-700 mb-2 transition-colors">
                   {svc.title}
                 </h2>
                 <p className="text-xs text-slate-600 leading-relaxed mb-4">{svc.description}</p>
@@ -73,7 +74,7 @@ export default async function PublicEServicePage() {
                   href={svc.url}
                   target={svc.isExternal ? '_blank' : '_self'}
                   rel={svc.isExternal ? 'noopener noreferrer' : undefined}
-                  className="w-full py-2.5 rounded-xl bg-slate-100 hover:bg-brand-navy-900 hover:text-white text-slate-800 text-xs font-semibold flex items-center justify-center gap-1.5 transition-colors"
+                  className="w-full py-2.5 rounded-xl bg-brand-navy-50/80 hover:bg-brand-navy-800 hover:text-white border border-brand-navy-100/60 text-brand-navy-900 text-xs font-semibold flex items-center justify-center gap-1.5 transition-all shadow-xs"
                 >
                   <span>เข้าสู่บริการ</span>
                   {svc.isExternal && <ExternalLink className="w-3.5 h-3.5" />}

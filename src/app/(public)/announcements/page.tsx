@@ -19,8 +19,9 @@ export default async function PublicAnnouncementsPage() {
     <div>
       <Breadcrumbs items={[{ label: 'ประกาศของโรงเรียน' }]} />
 
-      <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             Official Announcements
           </span>
@@ -35,7 +36,7 @@ export default async function PublicAnnouncementsPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-4">
         {announcementsList.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center text-slate-400">
+          <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-dashed border-slate-300 p-12 text-center text-slate-400">
             <Megaphone className="w-12 h-12 mx-auto mb-3 text-slate-300" />
             <p className="text-sm font-semibold">ไม่มีประกาศในขณะนี้</p>
           </div>
@@ -43,14 +44,18 @@ export default async function PublicAnnouncementsPage() {
           announcementsList.map((ann) => (
             <div
               key={ann.id}
-              className={`p-6 rounded-2xl border transition-all bg-white shadow-xs hover:shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-4 ${
-                ann.isPinned ? 'border-amber-300 bg-amber-50/20' : 'border-slate-200'
+              className={`p-6 rounded-2xl border transition-all duration-300 backdrop-blur-xl flex flex-col sm:flex-row sm:items-center justify-between gap-4 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-0.5 ${
+                ann.isPinned
+                  ? 'border-amber-300/80 bg-amber-50/40 hover:border-amber-400'
+                  : 'border-white/80 bg-white/75 hover:border-brand-navy-200'
               }`}
             >
               <div className="flex items-start gap-4">
                 <div
-                  className={`p-3 rounded-xl shrink-0 ${
-                    ann.isPinned ? 'bg-red-50 text-red-600' : 'bg-brand-navy-50 text-brand-navy-800'
+                  className={`p-3 rounded-xl shrink-0 backdrop-blur-md ${
+                    ann.isPinned
+                      ? 'bg-red-500/15 text-red-600 border border-red-500/20'
+                      : 'bg-brand-navy-50/80 text-brand-navy-800 border border-brand-navy-100'
                   }`}
                 >
                   {ann.isPinned ? <Pin className="w-5 h-5 fill-red-600" /> : <Megaphone className="w-5 h-5" />}
@@ -59,11 +64,11 @@ export default async function PublicAnnouncementsPage() {
                 <div>
                   <div className="flex flex-wrap items-center gap-2 mb-1.5">
                     {ann.isPinned && (
-                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-700">
+                      <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-red-500/15 text-red-700 border border-red-500/20">
                         ปักหมุดด่วน
                       </span>
                     )}
-                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-slate-100 text-slate-600">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-semibold bg-white/80 text-slate-600 border border-slate-200/80">
                       {ann.type === 'admission' ? 'รับสมัครนักเรียน' : ann.type === 'procurement' ? 'จัดซื้อจัดจ้าง' : 'ประกาศทั่วไป'}
                     </span>
                     <span className="text-xs text-slate-400">
@@ -85,7 +90,7 @@ export default async function PublicAnnouncementsPage() {
 
               <Link
                 href={`/announcements/${ann.slug}`}
-                className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-navy-50 text-brand-navy-900 text-xs font-bold inline-flex items-center gap-1 shrink-0 self-start sm:self-center"
+                className="px-4 py-2 rounded-xl bg-white/90 hover:bg-brand-navy-700 hover:text-white border border-slate-200/80 text-brand-navy-900 text-xs font-bold inline-flex items-center gap-1 shrink-0 self-start sm:self-center transition-all shadow-xs"
               >
                 <span>อ่านประกาศ</span>
                 <ArrowRight className="w-3.5 h-3.5" />

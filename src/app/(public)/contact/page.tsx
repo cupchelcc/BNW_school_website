@@ -45,8 +45,9 @@ export default async function PublicContactPage() {
       <Breadcrumbs items={[{ label: 'ติดต่อเรา' }]} editSlug="contact" />
       <AdminFloatingEditButton slug="contact" pageTitle="ติดต่อเรา" />
 
-      <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             Contact Information
           </span>
@@ -63,11 +64,11 @@ export default async function PublicContactPage() {
         <div className="grid gap-8 md:grid-cols-2">
           {/* Contact Details */}
           <div className="space-y-6">
-            <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-6">
-              <h2 className="text-xl font-bold text-slate-900 border-b pb-3">ข้อมูลการติดต่อราชการ</h2>
+            <div className="bg-white/75 backdrop-blur-xl rounded-3xl border border-white/80 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-6">
+              <h2 className="text-xl font-bold text-slate-900 border-b border-slate-100 pb-3">ข้อมูลการติดต่อราชการ</h2>
 
               <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-brand-navy-50 text-brand-navy-900 shrink-0 mt-0.5">
+                <div className="p-2.5 rounded-xl bg-brand-navy-50/80 text-brand-navy-900 border border-brand-navy-100 shrink-0 mt-0.5">
                   <MapPin className="w-5 h-5" />
                 </div>
                 <div>
@@ -79,7 +80,7 @@ export default async function PublicContactPage() {
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-brand-gold-50 text-brand-navy-950 shrink-0 mt-0.5">
+                <div className="p-2.5 rounded-xl bg-brand-gold-50/80 text-brand-navy-950 border border-brand-gold-200/80 shrink-0 mt-0.5">
                   <Phone className="w-5 h-5" />
                 </div>
                 <div>
@@ -91,7 +92,7 @@ export default async function PublicContactPage() {
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-sky-50 text-sky-700 shrink-0 mt-0.5">
+                <div className="p-2.5 rounded-xl bg-sky-50/80 text-sky-700 border border-sky-100 shrink-0 mt-0.5">
                   <Mail className="w-5 h-5" />
                 </div>
                 <div>
@@ -103,7 +104,7 @@ export default async function PublicContactPage() {
               </div>
 
               <div className="flex items-start gap-3.5">
-                <div className="p-2.5 rounded-xl bg-emerald-50 text-emerald-700 shrink-0 mt-0.5">
+                <div className="p-2.5 rounded-xl bg-emerald-50/80 text-emerald-700 border border-emerald-100 shrink-0 mt-0.5">
                   <Clock className="w-5 h-5" />
                 </div>
                 <div>
@@ -118,7 +119,7 @@ export default async function PublicContactPage() {
           </div>
 
           {/* Form */}
-          <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
+          <div className="bg-white/75 backdrop-blur-xl rounded-3xl border border-white/80 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <h2 className="text-xl font-bold text-slate-900 mb-2">ส่งข้อความติดต่อฝ่ายธุรการ</h2>
             <p className="text-xs text-slate-500 mb-6">
               กรอกข้อมูลเพื่อส่งข้อความหรือสอบถามเรื่องการศึกษา เจ้าหน้าที่จะตอบกลับโดยเร็วที่สุด

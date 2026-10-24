@@ -36,8 +36,9 @@ export default async function PublicNewsPage({
     <div>
       <Breadcrumbs items={[{ label: 'ข่าวประชาสัมพันธ์' }]} />
 
-      <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             News & Updates
           </span>
@@ -59,10 +60,10 @@ export default async function PublicNewsPage({
               <Link
                 key={cat.id}
                 href={cat.id === 'all' ? '/news' : `/news?category=${cat.id}`}
-                className={`px-4 py-2 rounded-full text-xs font-semibold transition-all ${
+                className={`px-4 py-2 rounded-full text-xs font-semibold backdrop-blur-md transition-all ${
                   isActive
-                    ? 'bg-brand-navy-900 text-white shadow-sm'
-                    : 'bg-white text-slate-600 border border-slate-200 hover:bg-slate-100'
+                    ? 'bg-brand-navy-900/90 text-brand-gold-400 shadow-md border border-brand-navy-700/80 scale-105'
+                    : 'bg-white/70 text-slate-700 border border-white/80 hover:bg-white/90 hover:border-slate-300 shadow-xs'
                 }`}
               >
                 {cat.label}
@@ -73,7 +74,7 @@ export default async function PublicNewsPage({
 
         {/* News Grid */}
         {filtered.length === 0 ? (
-          <div className="bg-white rounded-2xl border border-dashed border-slate-300 p-12 text-center text-slate-400">
+          <div className="bg-white/70 backdrop-blur-xl rounded-2xl border border-dashed border-slate-300 p-12 text-center text-slate-400">
             <Newspaper className="w-12 h-12 mx-auto mb-3 text-slate-300" />
             <p className="text-sm font-semibold">ไม่พบข่าวในหมวดหมู่นี้</p>
           </div>
@@ -82,33 +83,33 @@ export default async function PublicNewsPage({
             {filtered.map((item) => (
               <article
                 key={item.id}
-                className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs hover:shadow-lg transition-all flex flex-col justify-between group"
+                className="bg-white/75 backdrop-blur-xl rounded-2xl border border-white/80 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgba(11,31,60,0.12)] hover:border-brand-navy-200 hover:-translate-y-1.5 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div className="h-52 bg-slate-100 relative overflow-hidden flex items-center justify-center">
                   {item.coverImageUrl ? (
                     <img
                       src={item.coverImageUrl}
                       alt={item.title}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />
                   ) : (
                     <div className="w-full h-full bg-gradient-to-tr from-brand-navy-900 to-brand-navy-700 flex items-center justify-center text-white/50">
                       <Newspaper className="w-12 h-12" />
                     </div>
                   )}
-                  <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-brand-navy-950/80 text-white text-[11px] font-semibold backdrop-blur-sm">
+                  <span className="absolute top-3 right-3 px-3 py-1 rounded-full bg-brand-navy-950/80 text-brand-gold-300 text-[11px] font-semibold backdrop-blur-md border border-white/20 shadow-sm">
                     {item.category === 'activity' ? 'กิจกรรม' : item.category === 'academic' ? 'วิชาการ' : 'ทั่วไป'}
                   </span>
                 </div>
 
                 <div className="p-6 flex-1 flex flex-col justify-between">
                   <div>
-                    <div className="flex items-center gap-1.5 text-xs text-slate-400 mb-2">
-                      <Calendar className="w-3.5 h-3.5" />
+                    <div className="flex items-center gap-1.5 text-xs text-slate-500 mb-2 font-medium">
+                      <Calendar className="w-3.5 h-3.5 text-brand-navy-600" />
                       <span>{formatThaiDate(item.publishedAt || item.createdAt)}</span>
                     </div>
 
-                    <h2 className="font-bold text-slate-900 group-hover:text-brand-navy-700 text-base leading-snug line-clamp-2 mb-2">
+                    <h2 className="font-bold text-slate-900 group-hover:text-brand-navy-700 text-base leading-snug line-clamp-2 mb-2 transition-colors">
                       <Link href={`/news/${item.slug}`}>{item.title}</Link>
                     </h2>
 
@@ -119,7 +120,7 @@ export default async function PublicNewsPage({
 
                   <Link
                     href={`/news/${item.slug}`}
-                    className="inline-flex items-center gap-1 text-xs font-bold text-brand-navy-700 hover:text-brand-navy-900 pt-3 border-t border-slate-100"
+                    className="inline-flex items-center gap-1 text-xs font-bold text-brand-navy-700 hover:text-brand-gold-600 pt-3 border-t border-slate-100 transition-colors"
                   >
                     <span>อ่านรายละเอียด</span>
                     <ArrowRight className="w-3.5 h-3.5" />

@@ -42,8 +42,9 @@ export default async function HistoryPage() {
       />
       <AdminFloatingEditButton slug="about-history" pageTitle="ประวัติและข้อมูลทั่วไป" />
 
-      <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             ข้อมูลพื้นฐานสถานศึกษา
           </span>
@@ -58,9 +59,11 @@ export default async function HistoryPage() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 space-y-10">
         {/* Story */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm space-y-4 text-slate-700 leading-relaxed text-sm sm:text-base">
-          <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
-            <School className="w-6 h-6 text-brand-navy-800" />
+        <div className="bg-white/75 backdrop-blur-xl rounded-3xl border border-white/80 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] space-y-4 text-slate-700 leading-relaxed text-sm sm:text-base">
+          <h2 className="text-2xl font-bold text-slate-900 flex items-center gap-2.5">
+            <div className="p-2 bg-brand-navy-50 text-brand-navy-800 rounded-xl border border-brand-navy-100">
+              <School className="w-6 h-6" />
+            </div>
             <span>ความเป็นมาของสถานศึกษา</span>
           </h2>
           <p>
@@ -75,26 +78,28 @@ export default async function HistoryPage() {
         </div>
 
         {/* Identity Table */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-          <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2">
-            <Award className="w-5 h-5 text-brand-gold-500" />
+        <div className="bg-white/75 backdrop-blur-xl rounded-3xl border border-white/80 p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+          <h2 className="text-xl font-bold text-slate-900 mb-6 flex items-center gap-2.5">
+            <div className="p-2 bg-brand-gold-50 text-brand-gold-700 rounded-xl border border-brand-gold-200">
+              <Award className="w-5 h-5" />
+            </div>
             <span>อัตลักษณ์และข้อมูลเชิงสัญลักษณ์</span>
           </h2>
 
           <div className="grid gap-4 sm:grid-cols-2 text-sm">
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-5 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/70 shadow-sm">
               <span className="font-bold text-slate-900 block mb-1">สีประจำโรงเรียน</span>
               <p className="text-slate-600">น้ำเงิน - เหลือง (ความสุขุม มั่นคง และปัญญาอันสว่างไสว)</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-5 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/70 shadow-sm">
               <span className="font-bold text-slate-900 block mb-1">ปรัชญาของโรงเรียน</span>
               <p className="text-slate-600">สุวิชาโน ภวํ โหติ : ผู้รู้ดี เป็นผู้เจริญ</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-5 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/70 shadow-sm">
               <span className="font-bold text-slate-900 block mb-1">คำขวัญโรงเรียน</span>
               <p className="text-slate-600">เรียนดี กีฬาเด่น เน้นคุณธรรม สัมพันธ์ชุมชน</p>
             </div>
-            <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
+            <div className="p-5 rounded-2xl bg-white/70 backdrop-blur-md border border-slate-200/70 shadow-sm">
               <span className="font-bold text-slate-900 block mb-1">สังกัดหน่วยงาน</span>
               <p className="text-slate-600">สพป.สมุทรสาคร (สำนักงานคณะกรรมการการศึกษาขั้นพื้นฐาน)</p>
             </div>

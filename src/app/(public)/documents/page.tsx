@@ -21,8 +21,9 @@ export default async function PublicDocumentsPage() {
     <div>
       <Breadcrumbs items={[{ label: 'เอกสารดาวน์โหลด' }]} />
 
-      <section className="bg-brand-navy-950 text-white py-14 px-4 sm:px-6">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative overflow-hidden bg-gradient-to-br from-brand-navy-950 via-brand-navy-900 to-brand-navy-950 text-white py-14 sm:py-16 px-4 sm:px-6">
+        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-brand-gold-500/10 blur-3xl pointer-events-none" />
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             Downloads & Forms
           </span>
@@ -39,15 +40,17 @@ export default async function PublicDocumentsPage() {
         {/* Student Section */}
         <section className="space-y-4">
           <div className="flex items-center gap-2 text-brand-navy-900 font-bold text-lg">
-            <Folder className="w-5 h-5 text-brand-gold-500" />
+            <div className="p-1.5 rounded-lg bg-brand-gold-100/80 text-brand-navy-900">
+              <Folder className="w-5 h-5 text-brand-gold-600" />
+            </div>
             <h2>แบบฟอร์มสำหรับนักเรียนและผู้ปกครอง</h2>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100 overflow-hidden shadow-xs">
+          <div className="bg-white/75 backdrop-blur-xl rounded-2xl border border-white/80 divide-y divide-slate-100/80 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             {studentDocs.map((doc) => (
-              <div key={doc.id} className="p-5 flex items-center justify-between hover:bg-slate-50 transition-colors">
+              <div key={doc.id} className="p-5 flex items-center justify-between hover:bg-white/90 transition-colors">
                 <div className="flex items-start gap-3">
-                  <div className="p-2.5 bg-blue-50 text-blue-700 rounded-xl shrink-0 mt-0.5">
+                  <div className="p-2.5 bg-brand-navy-50/80 border border-brand-navy-100 text-brand-navy-800 rounded-xl shrink-0 mt-0.5">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
@@ -62,7 +65,7 @@ export default async function PublicDocumentsPage() {
                 <a
                   href={doc.fileUrl}
                   download
-                  className="px-4 py-2 rounded-xl bg-brand-navy-900 hover:bg-brand-navy-800 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors shadow-2xs shrink-0"
+                  className="px-4 py-2 rounded-xl bg-brand-navy-900/90 hover:bg-brand-navy-800 text-brand-gold-300 hover:text-white text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm border border-brand-navy-700/60 shrink-0"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>ดาวน์โหลด</span>
@@ -75,15 +78,17 @@ export default async function PublicDocumentsPage() {
         {/* General Section */}
         <section className="space-y-4">
           <div className="flex items-center gap-2 text-brand-navy-900 font-bold text-lg">
-            <Folder className="w-5 h-5 text-brand-navy-700" />
+            <div className="p-1.5 rounded-lg bg-brand-navy-100/80 text-brand-navy-900">
+              <Folder className="w-5 h-5 text-brand-navy-800" />
+            </div>
             <h2>คู่มือและเอกสารทั่วไป</h2>
           </div>
 
-          <div className="bg-white rounded-2xl border border-slate-200 divide-y divide-slate-100 overflow-hidden shadow-xs">
+          <div className="bg-white/75 backdrop-blur-xl rounded-2xl border border-white/80 divide-y divide-slate-100/80 overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             {generalDocs.map((doc) => (
-              <div key={doc.id} className="p-5 flex items-center justify-between hover:bg-slate-50 transition-colors">
+              <div key={doc.id} className="p-5 flex items-center justify-between hover:bg-white/90 transition-colors">
                 <div className="flex items-start gap-3">
-                  <div className="p-2.5 bg-slate-100 text-slate-700 rounded-xl shrink-0 mt-0.5">
+                  <div className="p-2.5 bg-slate-100/80 text-slate-700 rounded-xl shrink-0 mt-0.5 border border-slate-200/60">
                     <FileText className="w-5 h-5" />
                   </div>
                   <div>
@@ -98,7 +103,7 @@ export default async function PublicDocumentsPage() {
                 <a
                   href={doc.fileUrl}
                   download
-                  className="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold flex items-center gap-1.5 transition-colors shrink-0"
+                  className="px-4 py-2 rounded-xl bg-white/90 hover:bg-brand-navy-800 hover:text-white border border-slate-200 text-slate-800 text-xs font-semibold flex items-center gap-1.5 transition-all shadow-xs shrink-0"
                 >
                   <Download className="w-3.5 h-3.5" />
                   <span>ดาวน์โหลด</span>
