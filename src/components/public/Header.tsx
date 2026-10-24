@@ -173,23 +173,41 @@ export const Header: React.FC<HeaderProps> = ({ theme }) => {
                 onMouseLeave={() => hasChildren && handleMouseLeave()}
               >
                 {hasChildren ? (
-                  <button
-                    type="button"
-                    onClick={() => toggleDropdown(item.id)}
-                    className={`px-3.5 py-2 rounded-xl flex items-center gap-1.5 transition-all select-none ${
+                  <div
+                    className={`flex items-center rounded-xl transition-all ${
                       isOpen
                         ? 'text-brand-navy-950 bg-white/90 shadow-sm border border-white/80 font-bold backdrop-blur-md'
                         : 'text-slate-700 hover:text-brand-navy-900 hover:bg-white/60 hover:shadow-2xs backdrop-blur-xs'
                     }`}
-                    aria-expanded={isOpen}
                   >
-                    <span>{item.title}</span>
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 opacity-60 transition-transform duration-200 ${
-                        isOpen ? 'rotate-180 text-brand-gold-600 opacity-100' : ''
-                      }`}
-                    />
-                  </button>
+                    <Link
+                      href={item.href}
+                      onClick={() => {
+                        setActiveDropdown(null);
+                        setIsClickLocked(false);
+                      }}
+                      className="pl-3.5 pr-1.5 py-2 flex items-center transition-colors"
+                    >
+                      <span>{item.title}</span>
+                    </Link>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        toggleDropdown(item.id);
+                      }}
+                      className="pr-2.5 pl-1 py-2 flex items-center justify-center opacity-60 hover:opacity-100 transition-opacity"
+                      aria-label={`เปิดเมนูย่อย ${item.title}`}
+                      aria-expanded={isOpen}
+                    >
+                      <ChevronDown
+                        className={`w-3.5 h-3.5 transition-transform duration-200 ${
+                          isOpen ? 'rotate-180 text-brand-gold-600 opacity-100' : ''
+                        }`}
+                      />
+                    </button>
+                  </div>
                 ) : (
                   <Link
                     href={item.href}
@@ -203,6 +221,16 @@ export const Header: React.FC<HeaderProps> = ({ theme }) => {
                 {hasChildren && isOpen && (
                   <div className="absolute left-0 top-full pt-2 w-64 z-50 animate-in fade-in slide-in-from-top-1 duration-200">
                     <div className="bg-white/85 backdrop-blur-2xl rounded-2xl shadow-[0_20px_50px_rgba(11,31,60,0.15)] border border-white/90 p-2 relative before:content-[''] before:absolute before:-top-3 before:left-0 before:right-0 before:h-3">
+                      <Link
+                        href={item.href}
+                        onClick={() => {
+                          setActiveDropdown(null);
+                          setIsClickLocked(false);
+                        }}
+                        className="block px-3.5 py-2 rounded-xl text-xs font-bold text-brand-navy-800 bg-brand-navy-50/70 hover:bg-brand-navy-100/80 hover:text-brand-navy-950 mb-1 border-b border-slate-100/80 transition-all"
+                      >
+                        เข้าสู่หน้าหลัก: {item.title} &rarr;
+                      </Link>
                       {item.children!.map((child) => (
                         <Link
                           key={child.id}
