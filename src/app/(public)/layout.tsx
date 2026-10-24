@@ -91,7 +91,7 @@ export default async function PublicLayout({
   return (
     <>
       <Header theme={themeData} />
-      <main className="flex-1 w-full max-w-full overflow-x-hidden">{children}</main>
+      <main className="flex-1 w-full max-w-full overflow-x-clip">{children}</main>
       <Footer theme={themeData} />
     </>
   );
