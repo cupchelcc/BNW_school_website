@@ -38,7 +38,7 @@ export default async function PublicBotanicalPage({
             <TreePine className="w-3.5 h-3.5" />
             <span>โครงการอนุรักษ์พันธุกรรมพืชอันเนื่องมาจากพระราชดำริฯ (อพ.สธ.)</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold leading-[1.4] sm:leading-[1.45]">
             ฐานข้อมูลสวนพฤกษศาสตร์โรงเรียน
           </h1>
           <p className="text-sm text-emerald-200/80 mt-3 max-w-2xl mx-auto">

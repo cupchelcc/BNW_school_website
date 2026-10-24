@@ -46,7 +46,7 @@ export default async function BotanicalDetailPage({
             </span>
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold text-slate-900 leading-[1.4] sm:leading-[1.45]">
             {plant.thaiName}
           </h1>
           <p className="text-base sm:text-lg italic text-slate-600 font-serif mt-2">
@@ -61,7 +61,7 @@ export default async function BotanicalDetailPage({
               <TreePine className="w-4 h-4" />
               <span>ลักษณะเด่นทางพฤกษศาสตร์</span>
             </div>
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed whitespace-pre-line">
+            <p className="text-xs sm:text-sm text-slate-700 leading-[1.8] whitespace-pre-line">
               {plant.characteristics}
             </p>
           </div>

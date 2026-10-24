@@ -69,11 +69,11 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                 <span className="break-words whitespace-pre-line">{formatTextWithBreaks(badge)}</span>
               </div>
             )}
-            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white mb-6 leading-tight break-words drop-shadow-sm whitespace-pre-line">
+            <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold text-white mb-6 leading-[1.4] sm:leading-[1.45] lg:leading-[1.45] break-words drop-shadow-sm whitespace-pre-line">
               {formatTextWithBreaks(title)}
             </h1>
             {subtitle && (
-              <p className="text-sm sm:text-lg lg:text-xl text-slate-200 max-w-3xl mx-auto mb-10 leading-relaxed break-words px-2 font-normal whitespace-pre-line">
+              <p className="text-sm sm:text-lg lg:text-xl text-slate-200 max-w-3xl mx-auto mb-10 leading-relaxed sm:leading-[1.8] break-words px-2 font-normal whitespace-pre-line">
                 {formatTextWithBreaks(subtitle)}
               </p>
             )}
@@ -114,8 +114,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                   <Megaphone className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>
-                  <p className="text-xs sm:text-sm text-slate-600">ประกาศด่วนและข้อมูลแจ้งให้ทราบจากสถานศึกษา</p>
+                  <h2 className="text-xl sm:text-2xl font-bold text-slate-900 break-words whitespace-pre-line leading-[1.4]">{formatTextWithBreaks(title)}</h2>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-normal">ประกาศด่วนและข้อมูลแจ้งให้ทราบจากสถานศึกษา</p>
                 </div>
               </div>
               <Link
@@ -143,10 +143,10 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                           ปักหมุดด่วน
                         </span>
                       ) : null}
-                      <h3 className="font-bold text-slate-900 line-clamp-2 mb-2 hover:text-brand-navy-700 text-base break-words whitespace-pre-line">
+                      <h3 className="font-bold text-slate-900 line-clamp-2 mb-2 hover:text-brand-navy-700 text-base break-words whitespace-pre-line leading-[1.5]">
                         <Link href={`/announcements/${ann.slug}`}>{formatTextWithBreaks(ann.title)}</Link>
                       </h3>
-                      <p className="text-sm text-slate-600 line-clamp-3 mb-5 leading-relaxed break-words whitespace-pre-line">{formatTextWithBreaks(ann.content)}</p>
+                      <p className="text-sm text-slate-600 line-clamp-3 mb-5 leading-[1.75] break-words whitespace-pre-line">{formatTextWithBreaks(ann.content)}</p>
                     </div>
                     <div className="flex items-center justify-between text-xs text-slate-500 pt-3.5 border-t border-slate-100/80">
                       <span>{formatThaiDate(ann.publishedAt || ann.createdAt)}</span>
@@ -178,8 +178,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                   </div>
                   <span>ข่าวสาร & กิจกรรม</span>
                 </div>
-                <h2 className="text-3xl font-bold text-slate-900 tracking-tight break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>
-                {subtitle && <p className="text-slate-600 mt-1 break-words whitespace-pre-line">{formatTextWithBreaks(subtitle)}</p>}
+                <h2 className="text-3xl font-bold text-slate-900 break-words whitespace-pre-line leading-[1.4] sm:leading-[1.45]">{formatTextWithBreaks(title)}</h2>
+                {subtitle && <p className="text-slate-600 mt-1 break-words whitespace-pre-line leading-[1.75]">{formatTextWithBreaks(subtitle)}</p>}
               </div>
               <Link
                 href="/news"
@@ -223,10 +223,10 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                           <Calendar className="w-3.5 h-3.5 text-brand-navy-600" />
                           <span>{formatThaiDate(item.publishedAt || item.createdAt)}</span>
                         </div>
-                        <h3 className="font-bold text-slate-900 group-hover:text-brand-navy-700 line-clamp-2 mb-2 leading-snug transition-colors break-words whitespace-pre-line">
+                        <h3 className="font-bold text-slate-900 group-hover:text-brand-navy-700 line-clamp-2 mb-2 transition-colors break-words whitespace-pre-line leading-[1.5]">
                           <Link href={`/news/${item.slug}`}>{formatTextWithBreaks(item.title)}</Link>
                         </h3>
-                        <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed break-words whitespace-pre-line">
+                        <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-[1.75] break-words whitespace-pre-line">
                           {formatTextWithBreaks(item.summary || item.content)}
                         </p>
                       </div>
@@ -262,8 +262,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                   </div>
                   <span>โครงการอนุรักษ์พันธุกรรมพืช</span>
                 </div>
-                <h2 className="text-3xl font-bold text-slate-900 tracking-tight break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>
-                {subtitle && <p className="text-slate-600 mt-1 break-words whitespace-pre-line">{formatTextWithBreaks(subtitle)}</p>}
+                <h2 className="text-3xl font-bold text-slate-900 break-words whitespace-pre-line leading-[1.4] sm:leading-[1.45]">{formatTextWithBreaks(title)}</h2>
+                {subtitle && <p className="text-slate-600 mt-1 break-words whitespace-pre-line leading-[1.75]">{formatTextWithBreaks(subtitle)}</p>}
               </div>
               <Link
                 href="/botanical-garden"
@@ -286,9 +286,9 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                       </span>
                       <span className="text-xs text-slate-400">สถานะ: ตรวจสอบแล้ว</span>
                     </div>
-                    <h3 className="font-bold text-lg text-slate-900 mb-1 break-words whitespace-pre-line">{formatTextWithBreaks(plant.thaiName)}</h3>
-                    <p className="text-xs italic text-slate-500 mb-3 break-words whitespace-pre-line">{formatTextWithBreaks(plant.scientificName)}</p>
-                    <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-relaxed break-words whitespace-pre-line">{formatTextWithBreaks(plant.characteristics)}</p>
+                    <h3 className="font-bold text-lg text-slate-900 mb-1 break-words whitespace-pre-line leading-[1.4]">{formatTextWithBreaks(plant.thaiName)}</h3>
+                    <p className="text-xs italic text-slate-500 mb-3 break-words whitespace-pre-line leading-normal">{formatTextWithBreaks(plant.scientificName)}</p>
+                    <p className="text-sm text-slate-600 line-clamp-3 mb-4 leading-[1.75] break-words whitespace-pre-line">{formatTextWithBreaks(plant.characteristics)}</p>
                   </div>
                   <div className="pt-3 border-t border-slate-100 text-xs text-slate-500 flex items-center justify-between">
                     <span>ตำแหน่ง: {plant.locationInSchool}</span>
@@ -316,8 +316,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                 <GraduationCap className="w-3.5 h-3.5" />
                 <span>สะดวก รวดเร็ว โปร่งใส</span>
               </div>
-              <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>
-              {subtitle && <p className="text-slate-600 break-words whitespace-pre-line">{formatTextWithBreaks(subtitle)}</p>}
+              <h2 className="text-3xl font-bold text-slate-900 mb-3 break-words whitespace-pre-line leading-[1.4] sm:leading-[1.45]">{formatTextWithBreaks(title)}</h2>
+              {subtitle && <p className="text-slate-600 break-words whitespace-pre-line leading-[1.75]">{formatTextWithBreaks(subtitle)}</p>}
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -334,10 +334,10 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center justify-between gap-1">
-                      <h3 className="font-bold text-slate-900 group-hover:text-brand-navy-700 break-words whitespace-pre-line">{formatTextWithBreaks(svc.title)}</h3>
+                      <h3 className="font-bold text-slate-900 group-hover:text-brand-navy-700 break-words whitespace-pre-line leading-[1.4]">{formatTextWithBreaks(svc.title)}</h3>
                       {svc.isExternal && <ExternalLink className="w-4 h-4 text-slate-400 group-hover:text-brand-gold-600 shrink-0 transition-colors mt-0.5" />}
                     </div>
-                    <p className="text-xs text-slate-500 mt-1.5 leading-relaxed break-words whitespace-pre-line">{formatTextWithBreaks(svc.description)}</p>
+                    <p className="text-xs text-slate-500 mt-1.5 leading-[1.7] break-words whitespace-pre-line">{formatTextWithBreaks(svc.description)}</p>
                   </div>
                 </a>
               ))}
@@ -355,8 +355,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
         <section className="py-16 relative">
           <div className="max-w-6xl mx-auto px-4 sm:px-6">
             <div className="text-center max-w-2xl mx-auto mb-12">
-              <h2 className="text-3xl font-bold text-slate-900 mb-3 tracking-tight break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>
-              <p className="text-slate-600">คณะครูและบุคลากรทางการศึกษา โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)</p>
+              <h2 className="text-3xl font-bold text-slate-900 mb-3 break-words whitespace-pre-line leading-[1.4] sm:leading-[1.45]">{formatTextWithBreaks(title)}</h2>
+              <p className="text-slate-600 leading-[1.75]">คณะครูและบุคลากรทางการศึกษา โรงเรียนวัดบางน้ำวน (รอดพิทยาคม)</p>
             </div>
 
             <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -372,9 +372,9 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                       <User className="w-14 h-14 text-slate-300" />
                     )}
                   </div>
-                  <h3 className="font-bold text-slate-900 group-hover:text-brand-navy-700 text-base break-words whitespace-pre-line">{formatTextWithBreaks(member.name)}</h3>
-                  <p className="text-xs font-semibold text-brand-navy-700 mt-1 break-words whitespace-pre-line">{formatTextWithBreaks(member.position)}</p>
-                  <p className="text-xs text-slate-500 mt-1 break-words whitespace-pre-line">{formatTextWithBreaks(member.qualification)}</p>
+                  <h3 className="font-bold text-slate-900 group-hover:text-brand-navy-700 text-base break-words whitespace-pre-line leading-[1.4]">{formatTextWithBreaks(member.name)}</h3>
+                  <p className="text-xs font-semibold text-brand-navy-700 mt-1 break-words whitespace-pre-line leading-normal">{formatTextWithBreaks(member.position)}</p>
+                  <p className="text-xs text-slate-500 mt-1 break-words whitespace-pre-line leading-normal">{formatTextWithBreaks(member.qualification)}</p>
                 </div>
               ))}
             </div>
@@ -396,8 +396,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                   <Calendar className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
                 <div className="min-w-0">
-                  <h2 className="text-2xl font-bold text-slate-900 break-words whitespace-pre-line tracking-tight">{formatTextWithBreaks(title)}</h2>
-                  <p className="text-xs sm:text-sm text-slate-600">กำหนดการและกิจกรรมสำคัญของโรงเรียน</p>
+                  <h2 className="text-2xl font-bold text-slate-900 break-words whitespace-pre-line leading-[1.4]">{formatTextWithBreaks(title)}</h2>
+                  <p className="text-xs sm:text-sm text-slate-600 leading-normal">กำหนดการและกิจกรรมสำคัญของโรงเรียน</p>
                 </div>
               </div>
               <Link
@@ -419,8 +419,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                     <span className="text-[11px] font-bold text-brand-gold-700 tracking-wider">วันจัด</span>
                   </div>
                   <div className="flex-1">
-                    <h3 className="font-bold text-slate-900 break-words whitespace-pre-line">{formatTextWithBreaks(ev.title)}</h3>
-                    <p className="text-sm text-slate-600 mt-1 leading-relaxed break-words whitespace-pre-line">{formatTextWithBreaks(ev.description)}</p>
+                    <h3 className="font-bold text-slate-900 break-words whitespace-pre-line leading-[1.4]">{formatTextWithBreaks(ev.title)}</h3>
+                    <p className="text-sm text-slate-600 mt-1 leading-[1.75] break-words whitespace-pre-line">{formatTextWithBreaks(ev.description)}</p>
                     {ev.location && <p className="text-xs text-slate-500 mt-2 flex items-center gap-1">📍 สถานที่: {ev.location}</p>}
                   </div>
                 </div>
@@ -441,8 +441,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
               <div className="inline-flex p-3 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 mb-6 text-brand-gold-400 shadow-inner">
                 <GraduationCap className="w-8 h-8" />
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold mb-4 tracking-tight text-white break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>
-              {description && <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-base sm:text-lg leading-relaxed break-words whitespace-pre-line">{formatTextWithBreaks(description)}</p>}
+              <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-white break-words whitespace-pre-line leading-[1.4] sm:leading-[1.45]">{formatTextWithBreaks(title)}</h2>
+              {description && <p className="text-slate-300 max-w-2xl mx-auto mb-8 text-base sm:text-lg leading-[1.8] sm:leading-[1.85] break-words whitespace-pre-line">{formatTextWithBreaks(description)}</p>}
               <Link
                 href={buttonUrl}
                 className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-gold-400 to-brand-gold-500 hover:from-brand-gold-300 hover:to-brand-gold-400 text-brand-navy-950 font-bold shadow-[0_10px_25px_rgba(234,179,8,0.3)] transition-all hover:scale-105 inline-block border border-brand-gold-300"
@@ -463,8 +463,14 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
         <section className="py-12 px-4 sm:px-6 relative">
           <div className={`max-w-5xl mx-auto ${alignClass}`}>
             <div className="bg-white/75 backdrop-blur-xl rounded-3xl p-8 sm:p-12 border border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-              {title && <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-4 tracking-tight break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>}
-              <div className="text-slate-700 leading-relaxed whitespace-pre-line text-base sm:text-lg break-words">{formatTextWithBreaks(content)}</div>
+              {title && (
+                <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-5 leading-[1.4] sm:leading-[1.45] break-words whitespace-pre-line">
+                  {formatTextWithBreaks(title)}
+                </h2>
+              )}
+              <div className="text-slate-700 leading-[1.85] sm:leading-[1.9] whitespace-pre-line text-base sm:text-lg break-words font-normal">
+                {formatTextWithBreaks(content)}
+              </div>
             </div>
           </div>
         </section>
@@ -480,7 +486,7 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
           <div className="max-w-5xl mx-auto">
             <figure className={`max-w-3xl ${alignClass} p-3 bg-white/70 backdrop-blur-xl rounded-2xl border border-white/80 shadow-[0_10px_35px_rgba(0,0,0,0.05)]`}>
               <img src={imageUrl} alt={altText || caption || ''} className="w-full rounded-xl object-cover" />
-              {caption && <figcaption className="text-center text-xs text-slate-500 mt-2.5 font-medium break-words whitespace-pre-line">{formatTextWithBreaks(caption)}</figcaption>}
+              {caption && <figcaption className="text-center text-xs text-slate-500 mt-2.5 font-medium break-words whitespace-pre-line leading-[1.6]">{formatTextWithBreaks(caption)}</figcaption>}
             </figure>
           </div>
         </section>
@@ -494,13 +500,13 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
       return (
         <section className="py-12 px-4 sm:px-6 relative">
           <div className="max-w-6xl mx-auto">
-            {title && <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 text-center tracking-tight break-words whitespace-pre-line">{formatTextWithBreaks(title)}</h2>}
+            {title && <h2 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 text-center break-words whitespace-pre-line leading-[1.4] sm:leading-[1.45]">{formatTextWithBreaks(title)}</h2>}
             <div className={`grid gap-5 ${colClass}`}>
               {images.map((img: any, i: number) => (
                 <div key={i} className="group relative rounded-2xl overflow-hidden shadow-[0_8px_25px_rgba(0,0,0,0.05)] border border-white/80 bg-white/70 backdrop-blur-md aspect-video hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                   <img src={img.url} alt={img.alt || img.caption || ''} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   {img.caption && (
-                    <div className="absolute inset-x-0 bottom-0 p-3 bg-brand-navy-950/80 text-white text-xs text-center backdrop-blur-md border-t border-white/10 break-words whitespace-pre-line">
+                    <div className="absolute inset-x-0 bottom-0 p-3 bg-brand-navy-950/80 text-white text-xs text-center backdrop-blur-md border-t border-white/10 break-words whitespace-pre-line leading-[1.5]">
                       {formatTextWithBreaks(img.caption)}
                     </div>
                   )}
@@ -520,7 +526,7 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
         <section className="py-10 sm:py-12 px-4 sm:px-6 w-full max-w-full overflow-hidden relative">
           <div className="max-w-5xl mx-auto">
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
-              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 min-w-0">
+              <h2 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2 min-w-0 leading-[1.4]">
                 <div className="p-2 bg-brand-navy-50 text-brand-navy-700 rounded-lg shrink-0 border border-brand-navy-100">
                   <FileText className="w-5 h-5 sm:w-6 sm:h-6" />
                 </div>
@@ -538,7 +544,7 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
                       <Download className="w-4 h-4 sm:w-5 sm:h-5" />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="font-semibold text-slate-900 text-xs sm:text-sm break-words whitespace-pre-line">{formatTextWithBreaks(doc.title)}</h3>
+                      <h3 className="font-semibold text-slate-900 text-xs sm:text-sm break-words whitespace-pre-line leading-normal">{formatTextWithBreaks(doc.title)}</h3>
                       <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5">{doc.fileType} • {doc.fileSize}</p>
                     </div>
                   </div>
@@ -584,8 +590,8 @@ export const BlockRenderer: React.FC<BlockRendererProps> = ({ block, contextData
             <img src={slides[0].imageUrl} alt={slides[0].title || ''} className="w-full h-full object-cover" />
             {(slides[0].title || slides[0].caption) && (
               <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8 bg-gradient-to-t from-brand-navy-950/90 via-brand-navy-950/60 to-transparent text-white backdrop-blur-[2px]">
-                {slides[0].title && <h3 className="text-xl sm:text-3xl font-bold text-white drop-shadow-sm break-words whitespace-pre-line">{formatTextWithBreaks(slides[0].title)}</h3>}
-                {slides[0].caption && <p className="text-slate-200 text-xs sm:text-sm mt-1 sm:mt-2 max-w-2xl leading-relaxed break-words whitespace-pre-line">{formatTextWithBreaks(slides[0].caption)}</p>}
+                {slides[0].title && <h3 className="text-xl sm:text-3xl font-bold text-white drop-shadow-sm break-words whitespace-pre-line leading-[1.4]">{formatTextWithBreaks(slides[0].title)}</h3>}
+                {slides[0].caption && <p className="text-slate-200 text-xs sm:text-sm mt-1 sm:mt-2 max-w-2xl leading-[1.75] break-words whitespace-pre-line">{formatTextWithBreaks(slides[0].caption)}</p>}
               </div>
             )}
           </div>

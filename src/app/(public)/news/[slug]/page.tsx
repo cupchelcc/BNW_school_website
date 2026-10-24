@@ -56,12 +56,12 @@ export default async function NewsDetailPage({
             </div>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 leading-tight">
+          <h1 className="text-2xl sm:text-4xl font-bold text-slate-900 leading-[1.4] sm:leading-[1.45]">
             {news.title}
           </h1>
 
           {news.summary && (
-            <p className="text-base text-slate-600 mt-4 font-medium border-l-4 border-brand-gold-500 pl-4 py-1 leading-relaxed">
+            <p className="text-base text-slate-600 mt-4 font-medium border-l-4 border-brand-gold-500 pl-4 py-1 leading-[1.8]">
               {news.summary}
             </p>
           )}
@@ -74,7 +74,7 @@ export default async function NewsDetailPage({
         )}
 
         {/* Content Body */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-slate-700 leading-relaxed text-base whitespace-pre-line space-y-4">
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-slate-700 leading-[1.85] sm:leading-[1.9] text-base whitespace-pre-line space-y-4">
           {news.content}
         </div>
 

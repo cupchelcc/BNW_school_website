@@ -42,12 +42,12 @@ export default async function AnnouncementDetailPage({
             </div>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 leading-[1.4] sm:leading-[1.45]">
             {ann.title}
           </h1>
         </div>
 
-        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-slate-700 leading-relaxed text-base whitespace-pre-line">
+        <div className="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm text-slate-700 leading-[1.85] sm:leading-[1.9] text-base whitespace-pre-line">
           {ann.content}
         </div>
 

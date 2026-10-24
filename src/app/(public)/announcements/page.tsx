@@ -25,7 +25,7 @@ export default async function PublicAnnouncementsPage() {
           <span className="text-xs font-bold text-brand-gold-400 uppercase tracking-wider block mb-2">
             Official Announcements
           </span>
-          <h1 className="text-3xl sm:text-4xl font-bold tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-bold leading-[1.4] sm:leading-[1.45]">
             ประกาศและหนังสือแจ้งจากโรงเรียน
           </h1>
           <p className="text-sm text-slate-300 mt-3 max-w-2xl mx-auto">
