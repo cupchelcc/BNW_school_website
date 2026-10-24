@@ -581,21 +581,53 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                           className="w-full p-2 border border-slate-300 rounded-md"
                         />
                       </div>
-                      <div>
-                        <label className="font-bold text-slate-700 block mb-1">ข้อความปุ่มที่ 1</label>
-                        <input
-                          type="text"
-                          value={selectedBlock.data.primaryButtonText || ''}
-                          onChange={(e) => updateSelectedBlockData('primaryButtonText', e.target.value)}
-                          className="w-full p-2 border border-slate-300 rounded-md"
-                        />
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="font-bold text-slate-700 block mb-1">ข้อความปุ่ม 1</label>
+                          <input
+                            type="text"
+                            value={selectedBlock.data.primaryButtonText || ''}
+                            onChange={(e) => updateSelectedBlockData('primaryButtonText', e.target.value)}
+                            className="w-full p-2 border border-slate-300 rounded-md"
+                          />
+                        </div>
+                        <div>
+                          <label className="font-bold text-slate-700 block mb-1">URL ปุ่ม 1</label>
+                          <input
+                            type="text"
+                            value={selectedBlock.data.primaryButtonUrl || ''}
+                            onChange={(e) => updateSelectedBlockData('primaryButtonUrl', e.target.value)}
+                            className="w-full p-2 border border-slate-300 rounded-md"
+                          />
+                        </div>
+                      </div>
+                      <div className="grid grid-cols-2 gap-2">
+                        <div>
+                          <label className="font-bold text-slate-700 block mb-1">ข้อความปุ่ม 2</label>
+                          <input
+                            type="text"
+                            value={selectedBlock.data.secondaryButtonText || ''}
+                            onChange={(e) => updateSelectedBlockData('secondaryButtonText', e.target.value)}
+                            className="w-full p-2 border border-slate-300 rounded-md"
+                          />
+                        </div>
+                        <div>
+                          <label className="font-bold text-slate-700 block mb-1">URL ปุ่ม 2</label>
+                          <input
+                            type="text"
+                            value={selectedBlock.data.secondaryButtonUrl || ''}
+                            onChange={(e) => updateSelectedBlockData('secondaryButtonUrl', e.target.value)}
+                            className="w-full p-2 border border-slate-300 rounded-md"
+                          />
+                        </div>
                       </div>
                       <div>
-                        <label className="font-bold text-slate-700 block mb-1">URL ปุ่มที่ 1</label>
+                        <label className="font-bold text-slate-700 block mb-1">URL ภาพพื้นหลัง (ถ้ามี)</label>
                         <input
                           type="text"
-                          value={selectedBlock.data.primaryButtonUrl || ''}
-                          onChange={(e) => updateSelectedBlockData('primaryButtonUrl', e.target.value)}
+                          placeholder="https://... หรือ /images/..."
+                          value={selectedBlock.data.backgroundImageUrl || ''}
+                          onChange={(e) => updateSelectedBlockData('backgroundImageUrl', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
                         />
                       </div>
@@ -637,11 +669,206 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                     </>
                   )}
 
+                  {selectedBlock.type === 'image_single' && (
+                    <>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">URL รูปภาพ</label>
+                        <input
+                          type="text"
+                          placeholder="/images/... หรือ https://..."
+                          value={selectedBlock.data.imageUrl || ''}
+                          onChange={(e) => updateSelectedBlockData('imageUrl', e.target.value)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        />
+                      </div>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">คำบรรยายใต้ภาพ (Caption)</label>
+                        <input
+                          type="text"
+                          value={selectedBlock.data.caption || ''}
+                          onChange={(e) => updateSelectedBlockData('caption', e.target.value)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        />
+                      </div>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">การจัดวาง (Alignment)</label>
+                        <select
+                          value={selectedBlock.data.alignment || 'center'}
+                          onChange={(e) => updateSelectedBlockData('alignment', e.target.value)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        >
+                          <option value="center">กึ่งกลาง</option>
+                          <option value="left">ชิดซ้าย</option>
+                          <option value="right">ชิดขวา</option>
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedBlock.type === 'image_gallery' && (
+                    <>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">หัวข้อแกลเลอรี</label>
+                        <input
+                          type="text"
+                          value={selectedBlock.data.title || ''}
+                          onChange={(e) => updateSelectedBlockData('title', e.target.value)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        />
+                      </div>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">จำนวนคอลัมน์</label>
+                        <select
+                          value={selectedBlock.data.columns || 3}
+                          onChange={(e) => updateSelectedBlockData('columns', parseInt(e.target.value) || 3)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        >
+                          <option value={2}>2 คอลัมน์</option>
+                          <option value={3}>3 คอลัมน์</option>
+                          <option value={4}>4 คอลัมน์</option>
+                        </select>
+                      </div>
+                      <div className="pt-2 border-t border-slate-100">
+                        <div className="flex items-center justify-between mb-2">
+                          <label className="font-bold text-slate-700">รูปภาพ ({selectedBlock.data.images?.length || 0})</label>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const imgs = selectedBlock.data.images || [];
+                              updateSelectedBlockData('images', [
+                                ...imgs,
+                                { url: '/images/sample.jpg', caption: 'รูปภาพใหม่' },
+                              ]);
+                            }}
+                            className="px-2 py-1 bg-brand-navy-900 text-white rounded text-[11px] font-semibold hover:bg-brand-navy-800"
+                          >
+                            + เพิ่มรูป
+                          </button>
+                        </div>
+                        <div className="space-y-2 max-h-48 overflow-y-auto">
+                          {(selectedBlock.data.images || []).map((img: any, i: number) => (
+                            <div key={i} className="p-2 bg-slate-50 border border-slate-200 rounded space-y-1 text-[11px]">
+                              <div className="flex items-center justify-between">
+                                <span className="font-semibold text-slate-600">รูปที่ {i + 1}</span>
+                                <button
+                                  type="button"
+                                  onClick={() => {
+                                    const next = (selectedBlock.data.images || []).filter((_: any, idx: number) => idx !== i);
+                                    updateSelectedBlockData('images', next);
+                                  }}
+                                  className="text-red-500 hover:text-red-700 font-bold"
+                                >
+                                  ลบ
+                                </button>
+                              </div>
+                              <input
+                                type="text"
+                                placeholder="URL รูปภาพ"
+                                value={img.url || ''}
+                                onChange={(e) => {
+                                  const next = [...(selectedBlock.data.images || [])];
+                                  next[i] = { ...next[i], url: e.target.value };
+                                  updateSelectedBlockData('images', next);
+                                }}
+                                className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
+                              />
+                              <input
+                                type="text"
+                                placeholder="คำบรรยาย"
+                                value={img.caption || ''}
+                                onChange={(e) => {
+                                  const next = [...(selectedBlock.data.images || [])];
+                                  next[i] = { ...next[i], caption: e.target.value };
+                                  updateSelectedBlockData('images', next);
+                                }}
+                                className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedBlock.type === 'image_slider' && (
+                    <>
+                      <div className="flex items-center justify-between mb-2">
+                        <label className="font-bold text-slate-700">สไลด์แบนเนอร์ ({selectedBlock.data.slides?.length || 0})</label>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const slides = selectedBlock.data.slides || [];
+                            updateSelectedBlockData('slides', [
+                              ...slides,
+                              { imageUrl: '/images/banner.jpg', title: 'สไลด์ใหม่', caption: '' },
+                            ]);
+                          }}
+                          className="px-2 py-1 bg-brand-navy-900 text-white rounded text-[11px] font-semibold hover:bg-brand-navy-800"
+                        >
+                          + เพิ่มสไลด์
+                        </button>
+                      </div>
+                      <div className="space-y-2 max-h-60 overflow-y-auto">
+                        {(selectedBlock.data.slides || []).map((slide: any, i: number) => (
+                          <div key={i} className="p-2 bg-slate-50 border border-slate-200 rounded space-y-1 text-[11px]">
+                            <div className="flex items-center justify-between">
+                              <span className="font-semibold text-slate-600">สไลด์ที่ {i + 1}</span>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  const next = (selectedBlock.data.slides || []).filter((_: any, idx: number) => idx !== i);
+                                  updateSelectedBlockData('slides', next);
+                                }}
+                                className="text-red-500 hover:text-red-700 font-bold"
+                              >
+                                ลบ
+                              </button>
+                            </div>
+                            <input
+                              type="text"
+                              placeholder="URL รูปภาพสไลด์"
+                              value={slide.imageUrl || ''}
+                              onChange={(e) => {
+                                const next = [...(selectedBlock.data.slides || [])];
+                                next[i] = { ...next[i], imageUrl: e.target.value };
+                                updateSelectedBlockData('slides', next);
+                              }}
+                              className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
+                            />
+                            <input
+                              type="text"
+                              placeholder="หัวข้อสไลด์"
+                              value={slide.title || ''}
+                              onChange={(e) => {
+                                const next = [...(selectedBlock.data.slides || [])];
+                                next[i] = { ...next[i], title: e.target.value };
+                                updateSelectedBlockData('slides', next);
+                              }}
+                              className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
+                            />
+                            <input
+                              type="text"
+                              placeholder="คำบรรยายย่อย"
+                              value={slide.caption || ''}
+                              onChange={(e) => {
+                                const next = [...(selectedBlock.data.slides || [])];
+                                next[i] = { ...next[i], caption: e.target.value };
+                                updateSelectedBlockData('slides', next);
+                              }}
+                              className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </>
+                  )}
+
                   {(selectedBlock.type === 'news_list' ||
                     selectedBlock.type === 'announcement_list' ||
                     selectedBlock.type === 'botanical_highlight' ||
                     selectedBlock.type === 'event_list' ||
-                    selectedBlock.type === 'staff_cards') && (
+                    selectedBlock.type === 'staff_cards' ||
+                    selectedBlock.type === 'document_list') && (
                     <>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">หัวข้อบล็อก</label>
@@ -652,14 +879,51 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                           className="w-full p-2 border border-slate-300 rounded-md"
                         />
                       </div>
+                      {(selectedBlock.type === 'news_list' || selectedBlock.type === 'botanical_highlight') && (
+                        <div>
+                          <label className="font-bold text-slate-700 block mb-1">คำบรรยายย่อย (Subtitle)</label>
+                          <input
+                            type="text"
+                            value={(selectedBlock.data as any).subtitle || ''}
+                            onChange={(e) => updateSelectedBlockData('subtitle', e.target.value)}
+                            className="w-full p-2 border border-slate-300 rounded-md"
+                          />
+                        </div>
+                      )}
                       <div>
-                        <label className="font-bold text-slate-700 block mb-1">จำนวนที่แสดง (Limit)</label>
+                        <label className="font-bold text-slate-700 block mb-1">จำนวนรายการที่ดึงมาแสดง (Limit)</label>
                         <input
                           type="number"
                           min={1}
                           max={12}
                           value={(selectedBlock.data as any).limit || 3}
                           onChange={(e) => updateSelectedBlockData('limit', parseInt(e.target.value) || 3)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        />
+                      </div>
+                      <p className="text-[11px] text-slate-500 bg-slate-50 p-2 rounded border border-slate-200">
+                        ℹ️ ข้อมูลเนื้อหาในบล็อกนี้จะดึงมาจากระบบฐานข้อมูลของโรงเรียนโดยอัตโนมัติ
+                      </p>
+                    </>
+                  )}
+
+                  {selectedBlock.type === 'eservice_links' && (
+                    <>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">หัวข้อส่วนบริการ</label>
+                        <input
+                          type="text"
+                          value={selectedBlock.data.title || ''}
+                          onChange={(e) => updateSelectedBlockData('title', e.target.value)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        />
+                      </div>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">คำบรรยายย่อย</label>
+                        <input
+                          type="text"
+                          value={selectedBlock.data.subtitle || ''}
+                          onChange={(e) => updateSelectedBlockData('subtitle', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
                         />
                       </div>
@@ -708,16 +972,46 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                   )}
 
                   {selectedBlock.type === 'divider' && (
+                    <>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">รูปแบบเส้น (Style)</label>
+                        <select
+                          value={selectedBlock.data.style || 'solid'}
+                          onChange={(e) => updateSelectedBlockData('style', e.target.value)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        >
+                          <option value="solid">เส้นทึบ (Solid)</option>
+                          <option value="dashed">เส้นประ (Dashed)</option>
+                          <option value="dotted">เส้นจุด (Dotted)</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="font-bold text-slate-700 block mb-1">ระยะห่าง (Spacing)</label>
+                        <select
+                          value={selectedBlock.data.spacing || 'medium'}
+                          onChange={(e) => updateSelectedBlockData('spacing', e.target.value)}
+                          className="w-full p-2 border border-slate-300 rounded-md"
+                        >
+                          <option value="small">น้อย (Small)</option>
+                          <option value="medium">ปานกลาง (Medium)</option>
+                          <option value="large">มาก (Large)</option>
+                        </select>
+                      </div>
+                    </>
+                  )}
+
+                  {selectedBlock.type === 'spacer' && (
                     <div>
-                      <label className="font-bold text-slate-700 block mb-1">รูปแบบเส้น (Style)</label>
+                      <label className="font-bold text-slate-700 block mb-1">ความสูงช่องว่าง</label>
                       <select
-                        value={selectedBlock.data.style || 'solid'}
-                        onChange={(e) => updateSelectedBlockData('style', e.target.value)}
+                        value={selectedBlock.data.height || 'md'}
+                        onChange={(e) => updateSelectedBlockData('height', e.target.value)}
                         className="w-full p-2 border border-slate-300 rounded-md"
                       >
-                        <option value="solid">เส้นทึบ (Solid)</option>
-                        <option value="dashed">เส้นประ (Dashed)</option>
-                        <option value="dotted">เส้นจุด (Dotted)</option>
+                        <option value="sm">เล็ก (24px)</option>
+                        <option value="md">ปานกลาง (40px)</option>
+                        <option value="lg">ใหญ่ (64px)</option>
+                        <option value="xl">ใหญ่มาก (96px)</option>
                       </select>
                     </div>
                   )}

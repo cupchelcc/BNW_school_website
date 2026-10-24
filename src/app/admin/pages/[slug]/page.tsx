@@ -6,6 +6,9 @@ import { eq } from 'drizzle-orm';
 import { PageBuilderEditorWrapper } from '@/components/page-builder/editor/PageBuilderEditorWrapper';
 import { getPagePublicUrl, STANDARD_PAGES } from '@/lib/page-helper';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export default async function PageBuilderSlugPage({
   params,
 }: {

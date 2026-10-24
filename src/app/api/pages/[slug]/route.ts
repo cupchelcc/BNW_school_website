@@ -106,6 +106,8 @@ export async function PUT(req: NextRequest, { params }: { params: Promise<{ slug
       revalidatePath(publicUrl, 'page');
       revalidatePath('/', 'layout');
       revalidatePath('/admin/pages');
+      revalidatePath(`/admin/pages/${slug}`);
+      revalidatePath('/admin/pages/[slug]', 'page');
     } catch (revalErr) {
       console.warn('[Pages API] Revalidation warning:', revalErr);
     }
