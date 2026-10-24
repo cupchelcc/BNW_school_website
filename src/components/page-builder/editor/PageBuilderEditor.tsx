@@ -547,8 +547,13 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
               ) : (
                 <div className="space-y-4">
                   <div className="p-2.5 rounded bg-slate-50 border border-slate-200 text-slate-600">
-                    <span className="font-bold text-slate-800 block mb-0.5">ประเภท: {selectedBlock.type}</span>
-                    <span className="text-[11px] text-slate-500">ID: {selectedBlock.id}</span>
+                    <div className="flex items-center justify-between">
+                      <span className="font-bold text-slate-800">ประเภท: {selectedBlock.type}</span>
+                      <span className="text-[10px] text-slate-400 font-mono">ID: {selectedBlock.id}</span>
+                    </div>
+                    <p className="text-[11px] text-brand-navy-700 mt-1">
+                      💡 สามารถกด <strong>Enter</strong> เพื่อขึ้นบรรทัดใหม่ได้ในทุกช่องข้อความ
+                    </p>
                   </div>
 
                   {/* Dynamic Fields by Type */}
@@ -556,8 +561,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                     <>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">Badge หัวเรื่อง</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="ข้อความป้ายกำกับ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.badge || ''}
                           onChange={(e) => updateSelectedBlockData('badge', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -567,6 +573,7 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                         <label className="font-bold text-slate-700 block mb-1">หัวข้อหลัก (Title)</label>
                         <textarea
                           rows={2}
+                          placeholder="หัวข้อหลัก (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.title || ''}
                           onChange={(e) => updateSelectedBlockData('title', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -576,6 +583,7 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                         <label className="font-bold text-slate-700 block mb-1">คำบรรยายย่อย (Subtitle)</label>
                         <textarea
                           rows={3}
+                          placeholder="คำบรรยายย่อย (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.subtitle || ''}
                           onChange={(e) => updateSelectedBlockData('subtitle', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -638,8 +646,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                     <>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">หัวข้อส่วนเนื้อหา</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="หัวข้อ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.title || ''}
                           onChange={(e) => updateSelectedBlockData('title', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -649,6 +658,7 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                         <label className="font-bold text-slate-700 block mb-1">เนื้อหาข้อความ</label>
                         <textarea
                           rows={6}
+                          placeholder="พิมพ์ข้อความที่นี่ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.content || ''}
                           onChange={(e) => updateSelectedBlockData('content', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -683,8 +693,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                       </div>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">คำบรรยายใต้ภาพ (Caption)</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="คำบรรยายใต้ภาพ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.caption || ''}
                           onChange={(e) => updateSelectedBlockData('caption', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -709,8 +720,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                     <>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">หัวข้อแกลเลอรี</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="หัวข้อแกลเลอรี (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.title || ''}
                           onChange={(e) => updateSelectedBlockData('title', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -772,9 +784,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                                 }}
                                 className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
                               />
-                              <input
-                                type="text"
-                                placeholder="คำบรรยาย"
+                              <textarea
+                                rows={2}
+                                placeholder="คำบรรยาย (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                                 value={img.caption || ''}
                                 onChange={(e) => {
                                   const next = [...(selectedBlock.data.images || [])];
@@ -835,9 +847,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                               }}
                               className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
                             />
-                            <input
-                              type="text"
-                              placeholder="หัวข้อสไลด์"
+                            <textarea
+                              rows={2}
+                              placeholder="หัวข้อสไลด์ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                               value={slide.title || ''}
                               onChange={(e) => {
                                 const next = [...(selectedBlock.data.slides || [])];
@@ -846,9 +858,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                               }}
                               className="w-full p-1 border border-slate-300 rounded bg-white text-[11px]"
                             />
-                            <input
-                              type="text"
-                              placeholder="คำบรรยายย่อย"
+                            <textarea
+                              rows={2}
+                              placeholder="คำบรรยายย่อย (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                               value={slide.caption || ''}
                               onChange={(e) => {
                                 const next = [...(selectedBlock.data.slides || [])];
@@ -872,8 +884,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                     <>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">หัวข้อบล็อก</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="หัวข้อบล็อก (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={(selectedBlock.data as any).title || ''}
                           onChange={(e) => updateSelectedBlockData('title', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -882,8 +895,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                       {(selectedBlock.type === 'news_list' || selectedBlock.type === 'botanical_highlight') && (
                         <div>
                           <label className="font-bold text-slate-700 block mb-1">คำบรรยายย่อย (Subtitle)</label>
-                          <input
-                            type="text"
+                          <textarea
+                            rows={2}
+                            placeholder="คำบรรยายย่อย (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                             value={(selectedBlock.data as any).subtitle || ''}
                             onChange={(e) => updateSelectedBlockData('subtitle', e.target.value)}
                             className="w-full p-2 border border-slate-300 rounded-md"
@@ -911,8 +925,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                     <>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">หัวข้อส่วนบริการ</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="หัวข้อส่วนบริการ (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.title || ''}
                           onChange={(e) => updateSelectedBlockData('title', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -920,8 +935,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                       </div>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">คำบรรยายย่อย</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="คำบรรยายย่อย (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.subtitle || ''}
                           onChange={(e) => updateSelectedBlockData('subtitle', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -934,8 +950,9 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                     <>
                       <div>
                         <label className="font-bold text-slate-700 block mb-1">หัวข้อกระตุ้น</label>
-                        <input
-                          type="text"
+                        <textarea
+                          rows={2}
+                          placeholder="หัวข้อกระตุ้น (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.title || ''}
                           onChange={(e) => updateSelectedBlockData('title', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
@@ -945,6 +962,7 @@ export const PageBuilderEditor: React.FC<PageBuilderEditorProps> = ({
                         <label className="font-bold text-slate-700 block mb-1">คำอธิบาย</label>
                         <textarea
                           rows={3}
+                          placeholder="คำอธิบาย (กด Enter เพื่อขึ้นบรรทัดใหม่ได้)"
                           value={selectedBlock.data.description || ''}
                           onChange={(e) => updateSelectedBlockData('description', e.target.value)}
                           className="w-full p-2 border border-slate-300 rounded-md"
