@@ -63,7 +63,7 @@ export const themeSettings = sqliteTable('theme_settings', {
   contactPhone: text('contact_phone').default('034-490-XXX (อยู่ระหว่างยืนยันข้อมูล)'),
   contactEmail: text('contact_email').default('contact@bnw.ac.th'),
   contactAddress: text('contact_address').default('เลขที่ 40 หมู่ 4 ตำบลบางน้ำวน อำเภอเมืองสมุทรสาคร จังหวัดสมุทรสาคร 74000'),
-  facebookUrl: text('facebook_url').default('https://www.facebook.com/bnwschool'),
+  facebookUrl: text('facebook_url').default('https://www.facebook.com/Watbangnamwonschool'),
   lineUrl: text('line_url'),
   youtubeUrl: text('youtube_url'),
   navMenuItems: text('nav_menu_items').notNull(), // JSON Array

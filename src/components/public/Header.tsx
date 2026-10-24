@@ -131,18 +131,18 @@ export const Header: React.FC<HeaderProps> = ({ theme }) => {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 w-full relative">
         {/* School Logo & Title */}
         <Link href="/" className="flex items-center gap-2.5 sm:gap-3.5 group min-w-0 flex-1">
-          <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-2xl bg-white/90 p-1 flex items-center justify-center shadow-[0_4px_16px_rgba(11,31,60,0.1)] border border-white/80 group-hover:scale-105 transition-transform shrink-0 overflow-hidden">
+          <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/95 p-1 flex items-center justify-center shadow-[0_4px_16px_rgba(11,31,60,0.1)] border border-white/80 group-hover:scale-105 transition-transform shrink-0 overflow-hidden">
             {theme.logoUrl ? (
               <img
                 src={theme.logoUrl}
                 alt={theme.siteName}
-                className="w-full h-full object-contain"
+                className="w-full h-full max-w-full max-h-full object-contain"
               />
             ) : (
               <img
                 src="/images/logo.png"
                 alt={theme.siteName}
-                className="w-full h-full object-contain"
+                className="w-full h-full max-w-full max-h-full object-contain"
               />
             )}
           </div>

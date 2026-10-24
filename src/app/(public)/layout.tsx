@@ -19,7 +19,7 @@ export default async function PublicLayout({
     contactPhone: '034-490-XXX (อยู่ระหว่างเตรียมข้อมูลติดต่อ)',
     contactEmail: 'contact@bnw.ac.th',
     contactAddress: 'เลขที่ 40 หมู่ 4 ตำบลบางน้ำวน อำเภอเมืองสมุทรสาคร จังหวัดสมุทรสาคร 74000',
-    facebookUrl: 'https://www.facebook.com/bnwschool',
+    facebookUrl: 'https://www.facebook.com/Watbangnamwonschool',
     lineUrl: '',
     youtubeUrl: '',
     navMenuItems: [
@@ -78,7 +78,7 @@ export default async function PublicLayout({
         contactPhone: row.contactPhone || '',
         contactEmail: row.contactEmail || '',
         contactAddress: row.contactAddress || '',
-        facebookUrl: row.facebookUrl || '',
+        facebookUrl: (row.facebookUrl && !row.facebookUrl.includes('bnwschool')) ? row.facebookUrl : 'https://www.facebook.com/Watbangnamwonschool',
         lineUrl: row.lineUrl || '',
         youtubeUrl: row.youtubeUrl || '',
         navMenuItems: JSON.parse(row.navMenuItems || '[]'),

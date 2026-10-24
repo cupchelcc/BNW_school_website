@@ -20,15 +20,15 @@ function loadEnv() {
 
 async function main() {
   loadEnv();
-  console.log('[Logo Update] Starting database logo update...');
+  console.log('[Settings Update] Starting DB update for logo and facebook_url...');
 
   // 1. Local SQLite
   try {
     const local = createClient({ url: 'file:bnw_school.db' });
-    await local.execute("UPDATE theme_settings SET logo_url = '/images/logo.png' WHERE id = 'current'");
-    console.log('[Logo Update] ✅ Local DB updated logo_url to /images/logo.png');
+    await local.execute("UPDATE theme_settings SET logo_url = '/images/logo.png', facebook_url = 'https://www.facebook.com/Watbangnamwonschool' WHERE id = 'current'");
+    console.log('[Settings Update] ✅ Local DB updated logo_url and facebook_url');
   } catch (err) {
-    console.error('[Logo Update] ⚠️ Local DB update failed:', err);
+    console.error('[Settings Update] ⚠️ Local DB update failed:', err);
   }
 
   // 2. Turso Cloud DB
@@ -37,24 +37,24 @@ async function main() {
 
   if (tursoUrl && tursoUrl.startsWith('libsql://')) {
     try {
-      console.log(`[Logo Update] Updating Turso Cloud DB at ${tursoUrl}...`);
+      console.log(`[Settings Update] Updating Turso Cloud DB at ${tursoUrl}...`);
       const remote = createClient({
         url: tursoUrl,
         authToken: tursoToken,
       });
-      await remote.execute("UPDATE theme_settings SET logo_url = '/images/logo.png' WHERE id = 'current'");
-      console.log('[Logo Update] ✅ Turso Cloud DB updated logo_url to /images/logo.png');
+      await remote.execute("UPDATE theme_settings SET logo_url = '/images/logo.png', facebook_url = 'https://www.facebook.com/Watbangnamwonschool' WHERE id = 'current'");
+      console.log('[Settings Update] ✅ Turso Cloud DB updated logo_url and facebook_url');
     } catch (err) {
-      console.error('[Logo Update] ⚠️ Turso Cloud update failed:', err);
+      console.error('[Settings Update] ⚠️ Turso Cloud update failed:', err);
     }
   } else {
-    console.log('[Logo Update] ℹ️ No Turso Cloud URL detected.');
+    console.log('[Settings Update] ℹ️ No Turso Cloud URL detected.');
   }
 
-  console.log('[Logo Update] Finished successfully.');
+  console.log('[Settings Update] Finished successfully.');
 }
 
 main().catch((err) => {
-  console.error('[Logo Update] Fatal error:', err);
+  console.error('[Settings Update] Fatal error:', err);
   process.exit(1);
 });
